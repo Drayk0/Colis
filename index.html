@@ -219,8 +219,12 @@ header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.04em;animation:slide
 <div class="co" id="cO"><div class="cx"><h3>Supprimer ?</h3><p>Ce colis sera supprime.</p><div class="bts"><button class="bt btg" id="cN">Annuler</button><button class="bt btr" id="cY">Supprimer</button></div></div></div>
 
 <script>
-var SK='colis-data',NK='colis-nf',WK='colis-wk',STS=['commande','expedie','transit','livre'],SL={commande:'Commande',expedie:'Expedie',transit:'En transit',livre:'Livre'};
-var D=JSON.parse(localStorage.getItem(SK)||'[]'),nf=localStorage.getItem(NK)==='1',wk=localStorage.getItem(WK)||'',eI=null,dI=null,pend=null;
+var SK='colis-app-data',NK='colis-notif-enabled',WK='colis-worker-url',STS=['commande','expedie','transit','livre'],SL={commande:'Commande',expedie:'Expedie',transit:'En transit',livre:'Livre'};
+// Migrate from alternate keys if needed
+if(!localStorage.getItem(SK)&&localStorage.getItem('colis-data')){localStorage.setItem(SK,localStorage.getItem('colis-data'))}
+if(!localStorage.getItem(WK)&&localStorage.getItem('colis-wk')){localStorage.setItem(WK,localStorage.getItem('colis-wk'))}
+if(!localStorage.getItem(WK)&&localStorage.getItem('colis-worker')){localStorage.setItem(WK,localStorage.getItem('colis-worker'))}
+var D=JSON.parse(localStorage.getItem(SK)||'[]'),nf=localStorage.getItem(NK)==='true'||localStorage.getItem('colis-nf')==='1',wk=localStorage.getItem(WK)||localStorage.getItem('colis-wk')||localStorage.getItem('colis-worker')||'',eI=null,dI=null,pend=null;
 
 /* ── Carriers ── */
 var CLR={'colissimo':{b:'#003DA5',f:'#FFD200',l:'LP'},'la poste':{b:'#003DA5',f:'#FFD200',l:'LP'},'chronopost':{b:'#002D72',f:'#FFF',l:'CHRN'},'ups':{b:'#351C15',f:'#FFB500',l:'UPS'},'fedex':{b:'#4D148C',f:'#FF6600',l:'FedEx'},'dhl':{b:'#FFCC00',f:'#D40511',l:'DHL'},'mondial relay':{b:'#8B1A32',f:'#FFF',l:'MR'},'gls':{b:'#003DA5',f:'#FFD200',l:'GLS'},'dpd':{b:'#DC0032',f:'#FFF',l:'DPD'},'amazon':{b:'#232F3E',f:'#FF9900',l:'amz'},'cainiao':{b:'#FF6A00',f:'#FFF',l:'CN'},'tnt':{b:'#FF6600',f:'#FFF',l:'TNT'}};
@@ -305,7 +309,7 @@ _('sO').onclick=function(e){if(e.target===_('sO'))cSet()};
 _('eO').onclick=function(e){if(e.target===_('eO'))cEd()};
 _('cO').onclick=function(e){if(e.target===_('cO'))cCf()};
 _('eSg').onclick=function(e){var o=e.target.closest('.so');if(o)eSt(o.dataset.s)};
-_('nB').onclick=function(){if(nf){nf=false;localStorage.setItem(NK,'0');toast('Notifications off')}else{askN().then(function(ok){if(ok){nf=true;localStorage.setItem(NK,'1');toast('Notifications on')}else toast('Refusee');_('nB').classList.toggle('on',nf)})}_('nB').classList.toggle('on',nf)};
+_('nB').onclick=function(){if(nf){nf=false;localStorage.setItem(NK,'false');toast('Notifications off')}else{askN().then(function(ok){if(ok){nf=true;localStorage.setItem(NK,'true');toast('Notifications on')}else toast('Refusee');_('nB').classList.toggle('on',nf)})}_('nB').classList.toggle('on',nf)};
 document.onkeydown=function(e){if(e.key==='Escape'){if(_('cO').classList.contains('on'))cCf();else if(_('eO').classList.contains('on'))cEd();else if(_('sO').classList.contains('on'))cSet();else if(_('fBg').classList.contains('on'))cAdd()}};
 
 _('nB').classList.toggle('on',nf);render();chkN();setInterval(chkN,18e5);
