@@ -8,141 +8,156 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#000;--surface:#1C1C1E;--surface2:#2C2C2E;--text:#FFF;--text2:rgba(255,255,255,.55);--text3:rgba(255,255,255,.3);
-  --accent:#F0883E;--accent-bg:rgba(240,136,62,.15);--green:#34C759;--green-bg:rgba(52,199,89,.15);
-  --blue:#0A84FF;--blue-bg:rgba(10,132,255,.15);--yellow:#FFD60A;--yellow-bg:rgba(255,214,10,.15);
-  --red:#FF453A;--separator:rgba(255,255,255,.08);
-  --font:'Inter',system-ui,-apple-system,sans-serif;--sab:env(safe-area-inset-bottom,0px);
+  --bg:#000;--s:#1C1C1E;--s2:#2C2C2E;--s3:#3A3A3C;--t:#FFF;--t2:rgba(255,255,255,.55);--t3:rgba(255,255,255,.3);
+  --ac:#F0883E;--ac2:rgba(240,136,62,.15);--g:#34C759;--g2:rgba(52,199,89,.15);
+  --b:#0A84FF;--b2:rgba(10,132,255,.15);--y:#FFD60A;--y2:rgba(255,214,10,.15);
+  --r:#FF453A;--sep:rgba(255,255,255,.08);
+  --f:'Inter',system-ui,-apple-system,sans-serif;--sab:env(safe-area-inset-bottom,0px);
 }
 html{font-size:16px;-webkit-text-size-adjust:100%;touch-action:manipulation}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100dvh;-webkit-font-smoothing:antialiased}
+body{font-family:var(--f);background:var(--bg);color:var(--t);min-height:100dvh;-webkit-font-smoothing:antialiased}
 .app{max-width:500px;margin:0 auto;padding:0 20px;padding-bottom:calc(90px + var(--sab))}
 
-/* ── Header ── */
 header{padding:56px 0 8px}
-.gear{width:44px;height:44px;border-radius:50%;background:var(--surface);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);margin-bottom:12px;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.gear:hover{background:var(--surface2)}
+.gear{width:44px;height:44px;border-radius:50%;background:var(--s);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);margin-bottom:12px;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.gear:hover{background:var(--s2)}
 .gear svg{width:22px;height:22px}
 header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
 
-/* ── Empty ── */
 .empty{display:flex;align-items:center;justify-content:center;min-height:50vh}
-.empty p{color:var(--text2);font-size:.95rem;text-align:center;line-height:1.5}
+.empty p{color:var(--t2);font-size:.95rem;text-align:center;line-height:1.5}
 
-/* ── Cards ── */
 .list{display:flex;flex-direction:column;gap:2px;margin-top:24px}
-.card{background:var(--surface);padding:16px 18px;transition:background .15s;animation:fu .3s ease both;cursor:default}
+.card{background:var(--s);padding:16px 18px;transition:background .15s;animation:fu .3s ease both;cursor:default}
 .card:first-child{border-radius:14px 14px 0 0}
 .card:last-child{border-radius:0 0 14px 14px}
 .card:only-child{border-radius:14px}
-.card+.card{border-top:1px solid var(--separator)}
-.card:active{background:var(--surface2)}
+.card+.card{border-top:1px solid var(--sep)}
+.card:active{background:var(--s2)}
 
 .card-row{display:flex;align-items:center;gap:14px}
-.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem}
-.card-icon.commande{background:var(--blue-bg);color:var(--blue)}
-.card-icon.expedie{background:var(--yellow-bg);color:var(--yellow)}
-.card-icon.transit{background:var(--accent-bg);color:var(--accent)}
-.card-icon.livre{background:var(--green-bg);color:var(--green)}
+.card-logo{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;font-weight:700;overflow:hidden}
+.card-logo img{width:100%;height:100%;object-fit:contain}
+.card-logo.commande{background:var(--b2);color:var(--b)}
+.card-logo.expedie{background:var(--y2);color:var(--y)}
+.card-logo.transit{background:var(--ac2);color:var(--ac)}
+.card-logo.livre{background:var(--g2);color:var(--g)}
 .card-body{flex:1;min-width:0}
 .card-name{font-size:.9rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card-sub{font-size:.75rem;color:var(--text2);margin-top:2px}
-.card-eta{font-size:.7rem;font-weight:600;color:var(--accent);margin-top:1px}
-.card-chev{color:var(--text3);flex-shrink:0}
+.card-sub{font-size:.75rem;color:var(--t2);margin-top:2px}
+.card-eta{font-size:.7rem;font-weight:600;color:var(--ac);margin-top:1px}
+.card-chev{color:var(--t3);flex-shrink:0;transition:transform .2s}
+.card.open .card-chev{transform:rotate(90deg)}
 .card-chev svg{width:16px;height:16px}
 
-/* ── Card Detail (expanded) ── */
-.card-detail{display:none;padding-top:14px;margin-top:14px;border-top:1px solid var(--separator)}
+.card-detail{display:none;padding-top:14px;margin-top:14px;border-top:1px solid var(--sep)}
 .card.open .card-detail{display:block}
 
 .dots-row{display:flex;align-items:center;gap:0;margin-bottom:14px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--surface2)}
-.dot.done{background:var(--green)}
-.dot.cur{background:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
-.dot-line{flex:1;height:2px;background:var(--surface2)}
-.dot-line.done{background:var(--green)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--s2)}
+.dot.done{background:var(--g)}
+.dot.cur{background:var(--ac);box-shadow:0 0 0 3px var(--ac2)}
+.dot-line{flex:1;height:2px;background:var(--s2)}
+.dot-line.done{background:var(--g)}
 
 .tl-item{display:flex;gap:10px;padding-bottom:10px}
 .tl-item:last-of-type{padding-bottom:0}
 .tl-rail{display:flex;flex-direction:column;align-items:center;width:12px;flex-shrink:0}
-.tl-d{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0;margin-top:4px}
-.tl-item:first-of-type .tl-d{background:var(--accent)}
-.tl-w{width:1px;flex:1;background:var(--separator);margin-top:3px}
+.tl-d{width:6px;height:6px;border-radius:50%;background:var(--t3);flex-shrink:0;margin-top:4px}
+.tl-item:first-of-type .tl-d{background:var(--ac)}
+.tl-w{width:1px;flex:1;background:var(--sep);margin-top:3px}
 .tl-item:last-of-type .tl-w{display:none}
 .tl-t{font-size:.78rem;font-weight:500}
-.tl-m{font-size:.68rem;color:var(--text2);margin-top:1px}
+.tl-m{font-size:.68rem;color:var(--t2);margin-top:1px}
 
 .detail-actions{display:flex;gap:8px;margin-top:14px}
-.d-btn{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--font);font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:transparent;transition:opacity .15s}
+.d-btn{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--f);font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:transparent;transition:opacity .15s;text-decoration:none}
 .d-btn:active{opacity:.7}
 .d-btn svg{width:14px;height:14px}
-.d-sync{background:var(--accent-bg);color:var(--accent)}
-.d-track{background:var(--blue-bg);color:var(--blue)}
-.d-edit{background:var(--surface2);color:var(--text2)}
-.d-del{background:rgba(255,69,58,.12);color:var(--red)}
+.d-sync{background:var(--ac2);color:var(--ac)}
+.d-track{background:var(--b2);color:var(--b)}
+.d-edit{background:var(--s2);color:var(--t2)}
+.d-del{background:rgba(255,69,58,.12);color:var(--r)}
 
-/* ── Bottom Bar ── */
 .bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 20px calc(12px + var(--sab));display:flex;align-items:center;justify-content:space-between;z-index:50;max-width:500px;margin:0 auto}
 .b-btn{width:48px;height:48px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
 .b-btn:active{transform:scale(.9)}
-.b-search{background:var(--surface);color:var(--text2)}
-.b-search svg{width:22px;height:22px}
-.b-add{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(240,136,62,.35)}
+.b-notif{background:var(--s);color:var(--t2)}
+.b-notif.on{color:var(--ac)}
+.b-notif svg{width:22px;height:22px}
+.b-add{background:var(--ac);color:#fff;box-shadow:0 4px 16px rgba(240,136,62,.35)}
 .b-add svg{width:24px;height:24px}
 
 /* ── Overlays ── */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
 .ov.op{opacity:1;pointer-events:all}
-.sh{background:var(--surface);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 22px calc(20px + var(--sab));transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);max-height:88dvh;overflow-y:auto}
+.sh{background:var(--s);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 22px calc(20px + var(--sab));transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);max-height:88dvh;overflow-y:auto}
 .ov.op .sh{transform:translateY(0)}
-.sh-bar{width:36px;height:4px;border-radius:4px;background:var(--surface2);margin:0 auto 18px}
+.sh-bar{width:36px;height:4px;border-radius:4px;background:var(--s2);margin:0 auto 18px}
 .sh h2{font-size:1.1rem;font-weight:700;margin-bottom:20px}
 
 .fd{margin-bottom:16px}
-.fd label{display:block;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-.fd input,.fd textarea{width:100%;padding:12px 14px;border:none;border-radius:10px;font-family:var(--font);font-size:.88rem;color:var(--text);background:var(--surface2);outline:none;-webkit-appearance:none}
-.fd input::placeholder,.fd textarea::placeholder{color:var(--text3)}
+.fd label{display:block;font-size:.72rem;font-weight:600;color:var(--t2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.fd input,.fd textarea{width:100%;padding:12px 14px;border:none;border-radius:10px;font-family:var(--f);font-size:.88rem;color:var(--t);background:var(--s2);outline:none;-webkit-appearance:none}
+.fd input::placeholder,.fd textarea::placeholder{color:var(--t3)}
 .fd textarea{resize:none;min-height:60px}
-.fd-hint{font-size:.68rem;color:var(--text3);margin-top:4px}
+.fd-hint{font-size:.68rem;color:var(--t3);margin-top:4px}
 
-.det{display:none;align-items:center;gap:6px;margin-top:6px;padding:8px 12px;border-radius:8px;background:var(--green-bg);font-size:.78rem;font-weight:500;color:var(--green)}
-.det.on{display:flex}
-.det svg{width:14px;height:14px}
+/* Auto-sync indicator */
+.sync-status{display:none;align-items:center;gap:8px;margin-top:8px;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:500}
+.sync-status.loading{display:flex;background:var(--s2);color:var(--t2)}
+.sync-status.success{display:flex;background:var(--g2);color:var(--g)}
+.sync-status.error{display:flex;background:rgba(255,69,58,.12);color:var(--r)}
+.sync-status.loading .spinner{width:14px;height:14px;border:2px solid var(--t3);border-top-color:var(--t2);border-radius:50%;animation:sp .6s linear infinite}
+.sync-status svg{width:14px;height:14px;flex-shrink:0}
+
+/* Auto-filled fields */
+.auto-fields{display:none;margin-top:12px;padding:14px;background:var(--s2);border-radius:12px}
+.auto-fields.show{display:block}
+.auto-fields h4{font-size:.72rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+.af-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.af-row+.af-row{border-top:1px solid var(--sep)}
+.af-label{font-size:.78rem;color:var(--t2)}
+.af-value{font-size:.78rem;font-weight:600}
+.af-value.status{padding:3px 8px;border-radius:50px;font-size:.68rem}
+.af-value.commande{background:var(--b2);color:var(--b)}
+.af-value.expedie{background:var(--y2);color:var(--y)}
+.af-value.transit{background:var(--ac2);color:var(--ac)}
+.af-value.livre{background:var(--g2);color:var(--g)}
+
+/* Manual fields (hidden when auto) */
+.manual-fields{margin-top:12px}
+.manual-fields.hide{display:none}
 
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.so{padding:10px;border:1.5px solid var(--surface2);border-radius:10px;font-family:var(--font);font-size:.8rem;font-weight:500;text-align:center;cursor:pointer;background:transparent;color:var(--text2);-webkit-tap-highlight-color:transparent;transition:all .15s}
-.so.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
-
+.so{padding:10px;border:1.5px solid var(--s2);border-radius:10px;font-family:var(--f);font-size:.8rem;font-weight:500;text-align:center;cursor:pointer;background:transparent;color:var(--t2);-webkit-tap-highlight-color:transparent;transition:all .15s}
+.so.sel{border-color:var(--ac);background:var(--ac2);color:var(--ac);font-weight:600}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sbt{display:flex;gap:8px;margin-top:20px}
-.bt{flex:1;padding:14px;border-radius:12px;border:none;font-family:var(--font);font-size:.88rem;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
+.bt{flex:1;padding:14px;border-radius:12px;border:none;font-family:var(--f);font-size:.88rem;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
 .bt:active{transform:scale(.98)}
-.bm{background:var(--accent);color:#fff}
-.bg{background:var(--surface2);color:var(--text2)}
-.br{background:var(--red);color:#fff}
+.bm{background:var(--ac);color:#fff}
+.bg2{background:var(--s2);color:var(--t2)}
+.br{background:var(--r);color:#fff}
 
-/* ── Confirm ── */
 .co{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px}
 .co.op{opacity:1;pointer-events:all}
-.cx{background:var(--surface);border-radius:16px;padding:24px;max-width:300px;width:100%;text-align:center;transform:scale(.9);transition:transform .2s}
+.cx{background:var(--s);border-radius:16px;padding:24px;max-width:300px;width:100%;text-align:center;transform:scale(.9);transition:transform .2s}
 .co.op .cx{transform:scale(1)}
 .cx h3{font-size:1rem;font-weight:700;margin-bottom:6px}
-.cx p{font-size:.82rem;color:var(--text2);margin-bottom:18px}
+.cx p{font-size:.82rem;color:var(--t2);margin-bottom:18px}
 
-/* ── Toast ── */
 .ts{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none}
-.to{background:var(--surface);color:var(--text);padding:10px 20px;border-radius:50px;font-size:.8rem;font-weight:500;border:1px solid var(--separator);animation:ti .3s ease,too .3s ease 2.5s forwards;pointer-events:auto}
+.to{background:var(--s);color:var(--t);padding:10px 20px;border-radius:50px;font-size:.8rem;font-weight:500;border:1px solid var(--sep);animation:ti .3s ease,too .3s ease 2.5s forwards;pointer-events:auto}
 
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes sp{to{transform:rotate(360deg)}}
 @keyframes ti{from{opacity:0;transform:translateY(-10px)}to{opacity:1}}
 @keyframes too{to{opacity:0}}
-
 .ld svg{animation:sp .8s linear infinite}
 
-/* Light mode override */
 @media(prefers-color-scheme:light){
-:root{--bg:#F2F2F7;--surface:#FFF;--surface2:#E5E5EA;--text:#000;--text2:rgba(0,0,0,.5);--text3:rgba(0,0,0,.25);--separator:rgba(0,0,0,.06);--accent:#F0883E;--accent-bg:rgba(240,136,62,.1);--green:#34C759;--green-bg:rgba(52,199,89,.1);--blue:#007AFF;--blue-bg:rgba(0,122,255,.1);--yellow:#FF9F0A;--yellow-bg:rgba(255,159,10,.1);--red:#FF3B30;--red-bg:rgba(255,59,48,.1)}
+:root{--bg:#F2F2F7;--s:#FFF;--s2:#E5E5EA;--s3:#D1D1D6;--t:#000;--t2:rgba(0,0,0,.5);--t3:rgba(0,0,0,.25);--sep:rgba(0,0,0,.06);--ac:#F0883E;--ac2:rgba(240,136,62,.1);--g:#34C759;--g2:rgba(52,199,89,.1);--b:#007AFF;--b2:rgba(0,122,255,.1);--y:#FF9F0A;--y2:rgba(255,159,10,.1);--r:#FF3B30}
 .b-add{box-shadow:0 4px 16px rgba(240,136,62,.25)}
 }
 </style>
@@ -158,19 +173,36 @@ header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
 </div>
 
 <div class="bottom">
-  <button class="b-btn b-search" id="notBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
+  <button class="b-btn b-notif" id="notBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
   <button class="b-btn b-add" id="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
 </div>
 
 <!-- Add/Edit -->
 <div class="ov" id="md"><div class="sh"><div class="sh-bar"></div><h2 id="mt">Nouveau colis</h2>
 <div class="fd"><label>Nom</label><input id="iN" placeholder="iPhone 16, Nike Air Max…"></div>
-<div class="fd"><label>Numéro de suivi</label><input id="iT" placeholder="Colle ton numéro ici"><div class="det" id="det"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span id="dn"></span></div></div>
-<div class="fd"><label>Transporteur</label><input id="iC" placeholder="Auto-détecté"></div>
-<div class="fd"><label>Statut</label><div class="sg" id="sg"><div class="so sel" data-s="commande">Commandé</div><div class="so" data-s="expedie">Expédié</div><div class="so" data-s="transit">En transit</div><div class="so" data-s="livre">Livré</div></div></div>
-<div class="r2"><div class="fd"><label>Livraison estimée</label><input type="date" id="iE"></div><div class="fd"><label>Commandé le</label><input type="date" id="iO"></div></div>
+<div class="fd"><label>Numéro de suivi</label><input id="iT" placeholder="Colle ton numéro ici">
+  <div class="fd-hint" id="trackHint">Entre un numéro pour détecter automatiquement le transporteur et le statut</div>
+  <div class="sync-status" id="syncSt"><div class="spinner"></div><span id="syncMsg">Recherche en cours…</span></div>
+</div>
+
+<!-- Auto-detected info -->
+<div class="auto-fields" id="autoFields">
+  <h4>Détecté automatiquement</h4>
+  <div class="af-row"><span class="af-label">Transporteur</span><span class="af-value" id="afCarrier">—</span></div>
+  <div class="af-row"><span class="af-label">Statut</span><span class="af-value" id="afStatus">—</span></div>
+  <div class="af-row" id="afEtaRow" style="display:none"><span class="af-label">Livraison estimée</span><span class="af-value" id="afEta">—</span></div>
+  <div class="af-row"><span class="af-label">Étapes trouvées</span><span class="af-value" id="afEvents">0</span></div>
+</div>
+
+<!-- Manual fields (shown when no tracking or editing) -->
+<div class="manual-fields" id="manualFields">
+  <div class="fd"><label>Transporteur</label><input id="iC" placeholder="Saisir manuellement"></div>
+  <div class="fd"><label>Statut</label><div class="sg" id="sg"><div class="so sel" data-s="commande">Commandé</div><div class="so" data-s="expedie">Expédié</div><div class="so" data-s="transit">En transit</div><div class="so" data-s="livre">Livré</div></div></div>
+  <div class="r2"><div class="fd"><label>Livraison estimée</label><input type="date" id="iE"></div><div class="fd"><label>Commandé le</label><input type="date" id="iO"></div></div>
+</div>
+
 <div class="fd"><label>Note</label><textarea id="iNo" placeholder="Optionnel" rows="2"></textarea></div>
-<div class="sbt"><button class="bt bg" id="mc">Annuler</button><button class="bt bm" id="ms">Ajouter</button></div>
+<div class="sbt"><button class="bt bg2" id="mc">Annuler</button><button class="bt bm" id="ms">Ajouter</button></div>
 </div></div>
 
 <!-- Event -->
@@ -178,26 +210,126 @@ header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
 <div class="fd"><label>Description</label><input id="eD" placeholder="Centre de tri Lyon…"></div>
 <div class="r2"><div class="fd"><label>Date</label><input type="date" id="eDt"></div><div class="fd"><label>Heure</label><input type="time" id="eTm"></div></div>
 <div class="fd"><label>Lieu</label><input id="eL" placeholder="Optionnel"></div>
-<div class="sbt"><button class="bt bg" id="ec">Annuler</button><button class="bt bm" id="es">Ajouter</button></div>
+<div class="sbt"><button class="bt bg2" id="ec">Annuler</button><button class="bt bm" id="es">Ajouter</button></div>
 </div></div>
 
 <!-- Settings -->
 <div class="ov" id="sm"><div class="sh"><div class="sh-bar"></div><h2>Réglages</h2>
 <div class="fd"><label>URL Cloudflare Worker</label><input id="sU" placeholder="https://xxx.workers.dev"><div class="fd-hint">Relie ton Worker Ship24 pour le suivi automatique</div></div>
-<div class="sbt"><button class="bt bg" id="sc">Annuler</button><button class="bt bm" id="ss">Enregistrer</button></div>
+<div class="sbt"><button class="bt bg2" id="sc">Annuler</button><button class="bt bm" id="ss">Enregistrer</button></div>
 </div></div>
 
 <!-- Confirm -->
-<div class="co" id="cf"><div class="cx"><h3>Supprimer ?</h3><p>Ce colis sera supprimé.</p><div style="display:flex;gap:8px"><button class="bt bg" id="cn">Annuler</button><button class="bt br" id="cy">Supprimer</button></div></div></div>
+<div class="co" id="cf"><div class="cx"><h3>Supprimer ?</h3><p>Ce colis sera supprimé.</p><div style="display:flex;gap:8px"><button class="bt bg2" id="cn">Annuler</button><button class="bt br" id="cy">Supprimer</button></div></div></div>
 
 <script>
-const SK='colis-app-data',NK='colis-notif',WK='colis-worker',STS=['commande','expedie','transit','livre'],SL={commande:'Commandé',expedie:'Expédié',transit:'En transit',livre:'Livré'},SI={commande:'🕐',expedie:'📤',transit:'📦',livre:'✓'};
+const SK='colis-app-data',NK='colis-notif',WK='colis-worker',STS=['commande','expedie','transit','livre'],SL={commande:'Commandé',expedie:'Expédié',transit:'En transit',livre:'Livré'};
 let D=JSON.parse(localStorage.getItem(SK)||'[]'),nf=localStorage.getItem(NK)==='1',wk=localStorage.getItem(WK)||'',eId=null,dId=null,evT=null;
+
+// Pending auto-sync data from the form
+let pendingSync = null;
+
+// ── Carrier logos (initials with colors) ──
+const CARRIER_STYLE = {
+  'colissimo':{bg:'#FFD200',color:'#003DA5',label:'LP'},
+  'la poste':{bg:'#FFD200',color:'#003DA5',label:'LP'},
+  'chronopost':{bg:'#003DA5',color:'#FFF',label:'CH'},
+  'ups':{bg:'#351C15',color:'#FFB500',label:'UPS'},
+  'fedex':{bg:'#4D148C',color:'#FF6600',label:'FdX'},
+  'dhl':{bg:'#FFCC00',color:'#D40511',label:'DHL'},
+  'mondial relay':{bg:'#8B1A32',color:'#FFF',label:'MR'},
+  'gls':{bg:'#003DA5',color:'#FFD200',label:'GLS'},
+  'dpd':{bg:'#DC0032',color:'#FFF',label:'DPD'},
+  'amazon':{bg:'#232F3E',color:'#FF9900',label:'AMZ'},
+  'cainiao':{bg:'#FF6A00',color:'#FFF',label:'CN'},
+  'aliexpress':{bg:'#FF4747',color:'#FFF',label:'ALI'},
+  'tnt':{bg:'#FF6600',color:'#FFF',label:'TNT'},
+  'hermes':{bg:'#009FE3',color:'#FFF',label:'HRM'},
+  'royal mail':{bg:'#D4003C',color:'#FFF',label:'RM'},
+  'usps':{bg:'#333366',color:'#FFF',label:'USPS'},
+};
+function carrierLogo(name, status) {
+  if (!name) return '<div class="card-logo '+status+'">'+SL[status].charAt(0)+'</div>';
+  const key = name.toLowerCase();
+  for (const [k,v] of Object.entries(CARRIER_STYLE)) {
+    if (key.includes(k)) return '<div class="card-logo" style="background:'+v.bg+';color:'+v.color+'">'+v.label+'</div>';
+  }
+  // Fallback: first 2-3 letters
+  const short = name.replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
+  return '<div class="card-logo '+status+'">'+short+'</div>';
+}
+
 const CS=[{n:'Colissimo',p:[/^[0-9]{11}[A-Z]{2}$/i,/^[0-9]{13}$/],u:t=>'https://www.laposte.fr/outils/suivre-vos-envois?code='+t},{n:'La Poste',p:[/^[A-Z]{2}[0-9]{9}[A-Z]{2}$/i,/^[0-9]{15}$/],u:t=>'https://www.laposte.fr/outils/suivre-vos-envois?code='+t},{n:'Chronopost',p:[/^X[A-Z][0-9]{10}/i],u:t=>'https://www.chronopost.fr/tracking-no-powerful/tracking-unified/?langue=fr&numLT='+t},{n:'UPS',p:[/^1Z[A-Z0-9]{16}$/i],u:t=>'https://www.ups.com/track?tracknum='+t+'&loc=fr_FR'},{n:'FedEx',p:[/^[0-9]{12}$/,/^[0-9]{15}$/,/^[0-9]{22}$/],u:t=>'https://www.fedex.com/fedextrack/?trknbr='+t},{n:'DHL',p:[/^[0-9]{10}$/,/^JJD[0-9]{18}/i],u:t=>'https://www.dhl.com/fr-fr/home/suivi.html?tracking-id='+t},{n:'Mondial Relay',p:[/^[0-9]{8}$/,/^[0-9]{12}$/],u:t=>'https://www.mondialrelay.fr/suivi-de-colis?numExp='+t},{n:'DPD',p:[/^[0-9]{14}$/],u:t=>'https://trace.dpd.fr/fr/trace/'+t},{n:'Amazon',p:[/^TB[A-Z0-9]{10,}/i],u:t=>'https://track.amazon.fr/tracking/'+t},{n:'Cainiao',p:[/^LP[0-9]{14,}/i,/^R[A-Z][0-9]{9}[A-Z]{2}$/i],u:t=>'https://global.cainiao.com/detail.htm?mailNoList='+t}];
 function det2(t){if(!t||t.length<6)return null;t=t.trim().replace(/\s/g,'');for(const c of CS)for(const p of c.p)if(p.test(t))return c;return null}
 function tUrl(d){if(!d.tracking)return null;const c=det2(d.tracking);return c?c.u(d.tracking.trim()):'https://www.google.com/search?q=suivi+colis+'+encodeURIComponent(d.tracking)}
 function mSt(s){if(!s)return null;s=s.toLowerCase();if(s.includes('delivered')||s.includes('pickup'))return'livre';if(s.includes('transit')||s.includes('customs')||s.includes('out_for'))return'transit';if(s.includes('shipped')||s.includes('label')||s.includes('info'))return'expedie';return'transit'}
-async function sync(id){const d=D.find(x=>x.id===id);if(!d||!d.tracking||!wk){toast(wk?'Pas de suivi':'Configure l\'API');return}const b=document.querySelector('[data-id="'+id+'"] .d-sync');if(b)b.classList.add('ld');try{const r=await fetch(wk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber:d.tracking})});const j=await r.json();if(j.data&&j.data.trackings&&j.data.trackings[0]){const tk=j.data.trackings[0];if(tk.shipment&&tk.shipment.statusCode){const ns=mSt(tk.shipment.statusCode);if(ns){if(d.status!=='livre'&&ns==='livre'){sN('Livré !',d.name);toast(d.name+' livré !')}d.status=ns}}if(tk.shipment&&tk.shipment.delivery&&tk.shipment.delivery.estimatedDeliveryDate)d.eta=tk.shipment.delivery.estimatedDeliveryDate.split('T')[0];if(tk.events&&tk.events.length){if(!d.events)d.events=[];const ks=new Set(d.events.map(e=>e.desc+e.date));let n=0;tk.events.forEach(ev=>{const dt2=ev.datetime?new Date(ev.datetime):new Date();const ds=ev.status||'Mise à jour';const da=dt2.toISOString().split('T')[0];if(!ks.has(ds+da)){d.events.push({id:gid(),desc:ds,date:da,time:dt2.toTimeString().slice(0,5),location:ev.location||''});ks.add(ds+da);n++}});if(n)toast(n+' étape'+(n>1?'s':'')+' ajoutée'+(n>1?'s':''))}if(!d.source&&tk.events&&tk.events[0]&&tk.events[0].courierCode)d.source=tk.events[0].courierCode;d.updatedAt=Date.now();sv();render()}else toast('Aucune info trouvée')}catch(e){toast('Erreur : '+e.message)}finally{if(b)b.classList.remove('ld')}}
+
+// ── Auto-sync from form ──
+async function autoSync(trackingNumber) {
+  if (!wk || !trackingNumber) return null;
+  const ss = _('syncSt');
+  ss.className = 'sync-status loading';
+  _('syncMsg').textContent = 'Recherche en cours…';
+  try {
+    const r = await fetch(wk, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber})});
+    const j = await r.json();
+    if (j.data && j.data.trackings && j.data.trackings[0]) {
+      const tk = j.data.trackings[0];
+      const result = {carrier:null, status:null, eta:null, events:[]};
+      if (tk.shipment) {
+        if (tk.shipment.statusCode) result.status = mSt(tk.shipment.statusCode);
+        if (tk.shipment.delivery && tk.shipment.delivery.estimatedDeliveryDate) result.eta = tk.shipment.delivery.estimatedDeliveryDate.split('T')[0];
+      }
+      if (tk.events && tk.events.length) {
+        result.events = tk.events.map(ev => {
+          const dt = ev.datetime ? new Date(ev.datetime) : new Date();
+          return {id:gid(),desc:ev.status||'Mise à jour',date:dt.toISOString().split('T')[0],time:dt.toTimeString().slice(0,5),location:ev.location||''};
+        });
+        if (tk.events[0].courierCode) result.carrier = tk.events[0].courierCode;
+      }
+      if (!result.carrier && tk.shipment && tk.shipment.originCourierCode) result.carrier = tk.shipment.originCourierCode;
+      // Also try local detection
+      if (!result.carrier) {const c = det2(trackingNumber); if(c) result.carrier = c.n;}
+
+      // Show auto-detected info
+      ss.className = 'sync-status success';
+      ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Informations trouvées !</span>';
+      
+      const af = _('autoFields');
+      af.classList.add('show');
+      _('afCarrier').textContent = result.carrier || 'Inconnu';
+      const afSt = _('afStatus');
+      afSt.textContent = SL[result.status] || 'Inconnu';
+      afSt.className = 'af-value status ' + (result.status || '');
+      if (result.eta) {_('afEtaRow').style.display = 'flex'; _('afEta').textContent = new Date(result.eta).toLocaleDateString('fr-FR',{day:'numeric',month:'long'});}
+      else _('afEtaRow').style.display = 'none';
+      _('afEvents').textContent = result.events.length;
+
+      // Hide manual fields
+      _('manualFields').classList.add('hide');
+      _('trackHint').style.display = 'none';
+
+      pendingSync = result;
+      return result;
+    } else {
+      ss.className = 'sync-status error';
+      ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Aucune info trouvée — remplis manuellement</span>';
+      _('manualFields').classList.remove('hide');
+      pendingSync = null;
+      return null;
+    }
+  } catch(e) {
+    ss.className = 'sync-status error';
+    ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Erreur — remplis manuellement</span>';
+    _('manualFields').classList.remove('hide');
+    pendingSync = null;
+    return null;
+  }
+}
+
+// Sync existing card
+async function sync(id){const d=D.find(x=>x.id===id);if(!d||!d.tracking||!wk){toast(wk?'Pas de suivi':'Configure l\'API');return}const b=document.querySelector('[data-id="'+id+'"] .d-sync');if(b)b.classList.add('ld');try{const r=await fetch(wk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber:d.tracking})});const j=await r.json();if(j.data&&j.data.trackings&&j.data.trackings[0]){const tk=j.data.trackings[0];if(tk.shipment&&tk.shipment.statusCode){const ns=mSt(tk.shipment.statusCode);if(ns){if(d.status!=='livre'&&ns==='livre'){sN('Livré !',d.name);toast(d.name+' livré !')}d.status=ns}}if(tk.shipment&&tk.shipment.delivery&&tk.shipment.delivery.estimatedDeliveryDate)d.eta=tk.shipment.delivery.estimatedDeliveryDate.split('T')[0];if(tk.events&&tk.events.length){if(!d.events)d.events=[];const ks=new Set(d.events.map(e=>e.desc+e.date));let n=0;tk.events.forEach(ev=>{const dt=ev.datetime?new Date(ev.datetime):new Date();const ds=ev.status||'Mise à jour';const da=dt.toISOString().split('T')[0];if(!ks.has(ds+da)){d.events.push({id:gid(),desc:ds,date:da,time:dt.toTimeString().slice(0,5),location:ev.location||''});ks.add(ds+da);n++}});if(n)toast(n+' étape'+(n>1?'s':'')+' ajoutée'+(n>1?'s':''))}if(!d.source&&tk.events&&tk.events[0]&&tk.events[0].courierCode)d.source=tk.events[0].courierCode;d.updatedAt=Date.now();sv();render()}else toast('Aucune info trouvée')}catch(e){toast('Erreur : '+e.message)}finally{if(b)b.classList.remove('ld')}}
+
 async function aN(){if(!('Notification'in window))return false;if(Notification.permission==='granted')return true;return(await Notification.requestPermission())==='granted'}
 function sN(t,b){if(!nf||Notification.permission!=='granted')return;try{new Notification(t,{body:b})}catch(e){}}
 function cE(){if(!nf)return;const td=new Date;td.setHours(0,0,0,0);D.forEach(d=>{if(d.status==='livre'||!d.eta)return;const e=new Date(d.eta);e.setHours(0,0,0,0);const df=Math.ceil((e-td)/864e5);const k='n-'+d.id+'-'+df;if(localStorage.getItem(k))return;if(df===0){sN('Aujourd\'hui !',d.name);localStorage.setItem(k,'1')}else if(df===1){sN('Demain',d.name);localStorage.setItem(k,'1')}})}
@@ -210,8 +342,39 @@ function gS(){const e=_('sg').querySelector('.sel');return e?e.dataset.s:'comman
 function sS(s){_('sg').querySelectorAll('.so').forEach(e=>e.classList.toggle('sel',e.dataset.s===s))}
 const _=id=>document.getElementById(id);
 
-let dT;_('iT').addEventListener('input',()=>{clearTimeout(dT);dT=setTimeout(()=>{const c=det2(_('iT').value);if(c){_('det').classList.add('on');_('dn').textContent=c.n+' détecté';_('iC').value=c.n;if(gS()==='commande')sS('expedie')}else _('det').classList.remove('on')},300)});
+// ── Tracking input: auto-sync after typing ──
+let dT, lastTrack = '';
+_('iT').addEventListener('input',()=>{
+  clearTimeout(dT);
+  const val = _('iT').value.trim();
+  if (val.length < 6) {
+    _('syncSt').className = 'sync-status';
+    _('autoFields').classList.remove('show');
+    _('manualFields').classList.remove('hide');
+    _('trackHint').style.display = '';
+    pendingSync = null;
+    return;
+  }
+  dT = setTimeout(async () => {
+    if (val === lastTrack) return;
+    lastTrack = val;
+    // Try local detection first for carrier name hint
+    const c = det2(val);
+    if (c) _('iC').value = c.n;
+    // If API configured, auto-sync
+    if (wk) { await autoSync(val); }
+    else {
+      // No API — just show local detection
+      if (c) {
+        _('syncSt').className = 'sync-status success';
+        _('syncSt').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>'+c.n+' détecté</span>';
+      }
+      _('manualFields').classList.remove('hide');
+    }
+  }, 800);
+});
 
+// ── Render ──
 function render(){
   if(!D.length){_('ls').innerHTML='<div class="empty"><p>Appuie sur "+" pour ajouter<br>une nouvelle livraison</p></div>';return}
   _('ls').innerHTML='<div class="list">'+D.map(d=>{
@@ -219,16 +382,62 @@ function render(){
     let eta='';if(d.eta&&d.status!=='livre'){const td=new Date;td.setHours(0,0,0,0);const e=new Date(d.eta);e.setHours(0,0,0,0);const df=Math.ceil((e-td)/864e5);if(df<0)eta='En retard';else if(df===0)eta='Aujourd\'hui';else if(df===1)eta='Demain';else if(df<=7)eta='Dans '+df+' jours'}
     const dots=STS.map((s,i)=>{const c=i<si?'done':i===si?'cur':'';const l=i<3?'<div class="dot-line'+(i<si?' done':'')+'"></div>':'';return'<div class="dot '+c+'"></div>'+l}).join('');
     const tl=ev.length?ev.map(e=>'<div class="tl-item"><div class="tl-rail"><div class="tl-d"></div><div class="tl-w"></div></div><div><div class="tl-t">'+esc(e.desc)+'</div><div class="tl-m">'+fD(e.date)+(e.time?' · '+e.time:'')+(e.location?' · '+esc(e.location):'')+'</div></div></div>').join(''):'';
-    return'<div class="card" data-id="'+d.id+'" onclick="toggle(this)"><div class="card-row"><div class="card-icon '+d.status+'">'+SI[d.status]+'</div><div class="card-body"><div class="card-name">'+esc(d.name)+'</div><div class="card-sub">'+(d.source||SL[d.status])+'</div>'+(eta?'<div class="card-eta">'+eta+'</div>':'')+'</div><div class="card-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="card-detail"><div class="dots-row">'+dots+'</div>'+(tl||'<div class="tl-m">Aucune étape</div>')+'<div class="detail-actions">'+(ha?'<button class="d-btn d-sync" onclick="event.stopPropagation();sync(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync</button>':'')+(url?'<a class="d-btn d-track" href="'+url+'" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Suivre</a>':'')+'<button class="d-btn d-edit" onclick="event.stopPropagation();oEd(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="d-btn d-del" onclick="event.stopPropagation();oDl(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></div></div></div>'
+    return'<div class="card" data-id="'+d.id+'" onclick="toggle(this)"><div class="card-row">'+carrierLogo(d.source, d.status)+'<div class="card-body"><div class="card-name">'+esc(d.name)+'</div><div class="card-sub">'+(d.source||SL[d.status])+'</div>'+(eta?'<div class="card-eta">'+eta+'</div>':'')+(d.status==='livre'?'<div class="card-eta" style="color:var(--g)">Livré</div>':'')+'</div><div class="card-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="card-detail"><div class="dots-row">'+dots+'</div>'+(tl||'<div class="tl-m">Aucune étape</div>')+'<div class="detail-actions">'+(ha?'<button class="d-btn d-sync" onclick="event.stopPropagation();sync(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync</button>':'')+(url?'<a class="d-btn d-track" href="'+url+'" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Suivre</a>':'')+'<button class="d-btn d-edit" onclick="event.stopPropagation();oEd(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="d-btn d-del" onclick="event.stopPropagation();oDl(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></div></div></div>'
   }).join('')+'</div>';
 }
 
 function toggle(el){el.classList.toggle('open')}
 
-function oAd(){eId=null;_('mt').textContent='Nouveau colis';_('ms').textContent='Ajouter';_('iN').value='';_('iT').value='';_('iC').value='';_('iNo').value='';_('iE').value='';_('iO').value=new Date().toISOString().split('T')[0];_('det').classList.remove('on');sS('commande');_('md').classList.add('op');setTimeout(()=>_('iN').focus(),300)}
-function oEd(id){const d=D.find(x=>x.id===id);if(!d)return;eId=id;_('mt').textContent='Modifier';_('ms').textContent='Enregistrer';_('iN').value=d.name;_('iT').value=d.tracking||'';_('iC').value=d.source||'';_('iNo').value=d.note||'';_('iE').value=d.eta||'';_('iO').value=d.orderDate||'';sS(d.status);const c=det2(d.tracking);if(c){_('det').classList.add('on');_('dn').textContent=c.n+' détecté'}else _('det').classList.remove('on');_('md').classList.add('op')}
+function resetForm(){
+  pendingSync=null;lastTrack='';
+  _('syncSt').className='sync-status';
+  _('autoFields').classList.remove('show');
+  _('manualFields').classList.remove('hide');
+  _('trackHint').style.display='';
+  _('iC').value='';
+}
+
+function oAd(){eId=null;resetForm();_('mt').textContent='Nouveau colis';_('ms').textContent='Ajouter';_('iN').value='';_('iT').value='';_('iNo').value='';_('iE').value='';_('iO').value=new Date().toISOString().split('T')[0];sS('commande');_('md').classList.add('op');setTimeout(()=>_('iN').focus(),300)}
+function oEd(id){const d=D.find(x=>x.id===id);if(!d)return;eId=id;resetForm();_('mt').textContent='Modifier';_('ms').textContent='Enregistrer';_('iN').value=d.name;_('iT').value=d.tracking||'';_('iC').value=d.source||'';_('iNo').value=d.note||'';_('iE').value=d.eta||'';_('iO').value=d.orderDate||'';sS(d.status);_('manualFields').classList.remove('hide');_('md').classList.add('op')}
 function cM(){_('md').classList.remove('op')}
-function svM(){const nm=_('iN').value.trim();if(!nm){_('iN').focus();return}const os=eId?(D.find(x=>x.id===eId)||{}).status:null,ns=gS();const o={name:nm,source:_('iC').value.trim(),tracking:_('iT').value.trim(),note:_('iNo').value.trim(),status:ns,eta:_('iE').value||null,orderDate:_('iO').value||null,updatedAt:Date.now()};if(eId){const i=D.findIndex(x=>x.id===eId);if(i!==-1){D[i]={...D[i],...o};if(os&&os!==ns){if(!D[i].events)D[i].events=[];D[i].events.push({id:gid(),desc:'Statut → '+SL[ns],date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''});if(ns==='livre'){sN('Livré !',nm);toast(nm+' livré !')}}}}else{const nd={id:gid(),...o,createdAt:Date.now(),events:[{id:gid(),desc:'Commande enregistrée',date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''}]};D.unshift(nd);if(wk&&nd.tracking)setTimeout(()=>sync(nd.id),400)}sv();render();cM()}
+
+function svM(){
+  const nm=_('iN').value.trim();if(!nm){_('iN').focus();return}
+  const tracking = _('iT').value.trim();
+  
+  if(eId){
+    // Editing
+    const d=D.find(x=>x.id===eId);if(!d)return;
+    const os=d.status,ns=gS();
+    d.name=nm;d.tracking=tracking;d.source=_('iC').value.trim();d.note=_('iNo').value.trim();d.status=ns;d.eta=_('iE').value||null;d.orderDate=_('iO').value||null;d.updatedAt=Date.now();
+    if(os&&os!==ns){if(!d.events)d.events=[];d.events.push({id:gid(),desc:'Statut → '+SL[ns],date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''});if(ns==='livre'){sN('Livré !',nm);toast(nm+' livré !')}}
+  } else {
+    // Adding new
+    const nd = {
+      id:gid(), name:nm, tracking, note:_('iNo').value.trim(),
+      createdAt:Date.now(), updatedAt:Date.now(), events:[]
+    };
+
+    if (pendingSync) {
+      // Use auto-detected data
+      nd.source = pendingSync.carrier || _('iC').value.trim();
+      nd.status = pendingSync.status || 'commande';
+      nd.eta = pendingSync.eta || null;
+      nd.events = pendingSync.events || [];
+      if (nd.status === 'livre') toast(nm + ' est déjà livré !');
+    } else {
+      // Manual
+      nd.source = _('iC').value.trim();
+      nd.status = gS();
+      nd.eta = _('iE').value || null;
+      nd.orderDate = _('iO').value || null;
+      nd.events = [{id:gid(),desc:'Commande enregistrée',date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''}];
+    }
+    D.unshift(nd);
+  }
+  sv();render();cM();
+}
+
 function oEv(id){evT=id;_('eD').value='';_('eDt').value=new Date().toISOString().split('T')[0];_('eTm').value=new Date().toTimeString().slice(0,5);_('eL').value='';_('em').classList.add('op');setTimeout(()=>_('eD').focus(),300)}
 function cEv(){_('em').classList.remove('op')}
 function svEv(){const ds=_('eD').value.trim();if(!ds){_('eD').focus();return}const d=D.find(x=>x.id===evT);if(!d)return;if(!d.events)d.events=[];d.events.push({id:gid(),desc:ds,date:_('eDt').value,time:_('eTm').value,location:_('eL').value.trim()});d.updatedAt=Date.now();sv();render();cEv();toast('Étape ajoutée')}
@@ -242,10 +451,10 @@ function dDl(){if(!dId)return;D=D.filter(x=>x.id!==dId);sv();render();cCf()}
 _('fab').onclick=oAd;_('mc').onclick=cM;_('ms').onclick=svM;_('ec').onclick=cEv;_('es').onclick=svEv;_('setBtn').onclick=oSet;_('sc').onclick=cSet;_('ss').onclick=svSet;_('cn').onclick=cCf;_('cy').onclick=dDl;
 _('md').onclick=e=>{if(e.target===_('md'))cM()};_('em').onclick=e=>{if(e.target===_('em'))cEv()};_('sm').onclick=e=>{if(e.target===_('sm'))cSet()};_('cf').onclick=e=>{if(e.target===_('cf'))cCf()};
 _('sg').onclick=e=>{const o=e.target.closest('.so');if(o)sS(o.dataset.s)};
-_('notBtn').onclick=async()=>{if(nf){nf=false;localStorage.setItem(NK,'0');toast('Notifications off')}else{if(await aN()){nf=true;localStorage.setItem(NK,'1');toast('Notifications on')}else toast('Permission refusée')}_('notBtn').style.color=nf?'var(--accent)':'var(--text2)'};
+_('notBtn').onclick=async()=>{if(nf){nf=false;localStorage.setItem(NK,'0');toast('Notifications off')}else{if(await aN()){nf=true;localStorage.setItem(NK,'1');toast('Notifications on')}else toast('Permission refusée')}updN()};
+function updN(){_('notBtn').classList.toggle('on',nf)}
 document.onkeydown=e=>{if(e.key==='Escape'){if(_('cf').classList.contains('op'))cCf();else if(_('sm').classList.contains('op'))cSet();else if(_('em').classList.contains('op'))cEv();else if(_('md').classList.contains('op'))cM()}};
-if(nf)_('notBtn').style.color='var(--accent)';
-render();cE();setInterval(cE,18e5);
+updN();render();cE();setInterval(cE,18e5);
 </script>
 </body>
 </html>
