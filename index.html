@@ -2,459 +2,168 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
 <title>Colis</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#000;--s:#1C1C1E;--s2:#2C2C2E;--s3:#3A3A3C;--t:#FFF;--t2:rgba(255,255,255,.55);--t3:rgba(255,255,255,.3);
-  --ac:#F0883E;--ac2:rgba(240,136,62,.15);--g:#34C759;--g2:rgba(52,199,89,.15);
-  --b:#0A84FF;--b2:rgba(10,132,255,.15);--y:#FFD60A;--y2:rgba(255,214,10,.15);
-  --r:#FF453A;--sep:rgba(255,255,255,.08);
-  --f:'Inter',system-ui,-apple-system,sans-serif;--sab:env(safe-area-inset-bottom,0px);
-}
+:root{--bg:#000;--cd:#1C1C1E;--cd2:#2C2C2E;--cd3:#3A3A3C;--t:#FFF;--t2:rgba(255,255,255,.55);--t3:rgba(255,255,255,.28);--ac:#F0883E;--ac2:rgba(240,136,62,.15);--g:#30D158;--g2:rgba(48,209,88,.12);--b:#0A84FF;--b2:rgba(10,132,255,.12);--y:#FFD60A;--y2:rgba(255,214,10,.12);--r:#FF453A;--r2:rgba(255,69,58,.12);--sep:rgba(84,84,88,.35);--f:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px)}
 html{font-size:16px;-webkit-text-size-adjust:100%;touch-action:manipulation}
-body{font-family:var(--f);background:var(--bg);color:var(--t);min-height:100dvh;-webkit-font-smoothing:antialiased}
-.app{max-width:500px;margin:0 auto;padding:0 20px;padding-bottom:calc(90px + var(--sab))}
-
-header{padding:56px 0 8px}
-.gear{width:44px;height:44px;border-radius:50%;background:var(--s);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);margin-bottom:12px;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.gear:hover{background:var(--s2)}
-.gear svg{width:22px;height:22px}
-header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
-
-.empty{display:flex;align-items:center;justify-content:center;min-height:50vh}
-.empty p{color:var(--t2);font-size:.95rem;text-align:center;line-height:1.5}
-
-.list{display:flex;flex-direction:column;gap:2px;margin-top:24px}
-.card{background:var(--s);padding:16px 18px;transition:background .15s;animation:fu .3s ease both;cursor:default}
-.card:first-child{border-radius:14px 14px 0 0}
-.card:last-child{border-radius:0 0 14px 14px}
-.card:only-child{border-radius:14px}
-.card+.card{border-top:1px solid var(--sep)}
-.card:active{background:var(--s2)}
-
+body{font-family:var(--f);background:var(--bg);color:var(--t);min-height:100dvh;-webkit-font-smoothing:antialiased;padding-left:var(--sal);padding-right:var(--sar)}
+.app{max-width:500px;margin:0 auto;padding:0 20px;padding-top:calc(var(--sat) + 16px);padding-bottom:calc(80px + var(--sab))}
+header{padding:20px 0 24px}
+.gear{width:48px;height:48px;border-radius:50%;background:var(--cd);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);margin-bottom:16px;-webkit-tap-highlight-color:transparent}
+.gear svg{width:24px;height:24px}
+header h1{font-size:2.4rem;font-weight:800;letter-spacing:-.04em}
+.empty{display:flex;align-items:center;justify-content:center;min-height:55vh}
+.empty p{color:var(--t3);font-size:1rem;text-align:center;line-height:1.6}
+.list{display:flex;flex-direction:column;margin-top:8px;background:var(--cd);border-radius:14px;overflow:hidden}
+.card{padding:14px 16px;cursor:default;-webkit-tap-highlight-color:transparent}
+.card+.card{border-top:.5px solid var(--sep)}
 .card-row{display:flex;align-items:center;gap:14px}
-.card-logo{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;font-weight:700;overflow:hidden}
-.card-logo img{width:100%;height:100%;object-fit:contain}
-.card-logo.commande{background:var(--b2);color:var(--b)}
-.card-logo.expedie{background:var(--y2);color:var(--y)}
-.card-logo.transit{background:var(--ac2);color:var(--ac)}
-.card-logo.livre{background:var(--g2);color:var(--g)}
+.clogo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.58rem;font-weight:800;letter-spacing:.02em;line-height:1;text-align:center}
 .card-body{flex:1;min-width:0}
-.card-name{font-size:.9rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card-sub{font-size:.75rem;color:var(--t2);margin-top:2px}
-.card-eta{font-size:.7rem;font-weight:600;color:var(--ac);margin-top:1px}
+.card-name{font-size:.93rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-sub{font-size:.76rem;color:var(--t2);margin-top:2px}
+.card-eta{font-size:.72rem;font-weight:600;color:var(--ac);margin-top:2px}
+.card-eta.ok{color:var(--g)}
 .card-chev{color:var(--t3);flex-shrink:0;transition:transform .2s}
 .card.open .card-chev{transform:rotate(90deg)}
-.card-chev svg{width:16px;height:16px}
-
-.card-detail{display:none;padding-top:14px;margin-top:14px;border-top:1px solid var(--sep)}
-.card.open .card-detail{display:block}
-
-.dots-row{display:flex;align-items:center;gap:0;margin-bottom:14px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--s2)}
-.dot.done{background:var(--g)}
-.dot.cur{background:var(--ac);box-shadow:0 0 0 3px var(--ac2)}
-.dot-line{flex:1;height:2px;background:var(--s2)}
-.dot-line.done{background:var(--g)}
-
-.tl-item{display:flex;gap:10px;padding-bottom:10px}
-.tl-item:last-of-type{padding-bottom:0}
-.tl-rail{display:flex;flex-direction:column;align-items:center;width:12px;flex-shrink:0}
-.tl-d{width:6px;height:6px;border-radius:50%;background:var(--t3);flex-shrink:0;margin-top:4px}
-.tl-item:first-of-type .tl-d{background:var(--ac)}
-.tl-w{width:1px;flex:1;background:var(--sep);margin-top:3px}
-.tl-item:last-of-type .tl-w{display:none}
-.tl-t{font-size:.78rem;font-weight:500}
-.tl-m{font-size:.68rem;color:var(--t2);margin-top:1px}
-
-.detail-actions{display:flex;gap:8px;margin-top:14px}
-.d-btn{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--f);font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:transparent;transition:opacity .15s;text-decoration:none}
-.d-btn:active{opacity:.7}
-.d-btn svg{width:14px;height:14px}
-.d-sync{background:var(--ac2);color:var(--ac)}
-.d-track{background:var(--b2);color:var(--b)}
-.d-edit{background:var(--s2);color:var(--t2)}
-.d-del{background:rgba(255,69,58,.12);color:var(--r)}
-
-.bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 20px calc(12px + var(--sab));display:flex;align-items:center;justify-content:space-between;z-index:50;max-width:500px;margin:0 auto}
-.b-btn{width:48px;height:48px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
-.b-btn:active{transform:scale(.9)}
-.b-notif{background:var(--s);color:var(--t2)}
-.b-notif.on{color:var(--ac)}
-.b-notif svg{width:22px;height:22px}
-.b-add{background:var(--ac);color:#fff;box-shadow:0 4px 16px rgba(240,136,62,.35)}
-.b-add svg{width:24px;height:24px}
-
-/* ── Overlays ── */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-.ov.op{opacity:1;pointer-events:all}
-.sh{background:var(--s);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 22px calc(20px + var(--sab));transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);max-height:88dvh;overflow-y:auto}
-.ov.op .sh{transform:translateY(0)}
-.sh-bar{width:36px;height:4px;border-radius:4px;background:var(--s2);margin:0 auto 18px}
-.sh h2{font-size:1.1rem;font-weight:700;margin-bottom:20px}
-
-.fd{margin-bottom:16px}
-.fd label{display:block;font-size:.72rem;font-weight:600;color:var(--t2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-.fd input,.fd textarea{width:100%;padding:12px 14px;border:none;border-radius:10px;font-family:var(--f);font-size:.88rem;color:var(--t);background:var(--s2);outline:none;-webkit-appearance:none}
-.fd input::placeholder,.fd textarea::placeholder{color:var(--t3)}
-.fd textarea{resize:none;min-height:60px}
-.fd-hint{font-size:.68rem;color:var(--t3);margin-top:4px}
-
-/* Auto-sync indicator */
-.sync-status{display:none;align-items:center;gap:8px;margin-top:8px;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:500}
-.sync-status.loading{display:flex;background:var(--s2);color:var(--t2)}
-.sync-status.success{display:flex;background:var(--g2);color:var(--g)}
-.sync-status.error{display:flex;background:rgba(255,69,58,.12);color:var(--r)}
-.sync-status.loading .spinner{width:14px;height:14px;border:2px solid var(--t3);border-top-color:var(--t2);border-radius:50%;animation:sp .6s linear infinite}
-.sync-status svg{width:14px;height:14px;flex-shrink:0}
-
-/* Auto-filled fields */
-.auto-fields{display:none;margin-top:12px;padding:14px;background:var(--s2);border-radius:12px}
-.auto-fields.show{display:block}
-.auto-fields h4{font-size:.72rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
-.af-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
-.af-row+.af-row{border-top:1px solid var(--sep)}
-.af-label{font-size:.78rem;color:var(--t2)}
-.af-value{font-size:.78rem;font-weight:600}
-.af-value.status{padding:3px 8px;border-radius:50px;font-size:.68rem}
-.af-value.commande{background:var(--b2);color:var(--b)}
-.af-value.expedie{background:var(--y2);color:var(--y)}
-.af-value.transit{background:var(--ac2);color:var(--ac)}
-.af-value.livre{background:var(--g2);color:var(--g)}
-
-/* Manual fields (hidden when auto) */
-.manual-fields{margin-top:12px}
-.manual-fields.hide{display:none}
-
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.so{padding:10px;border:1.5px solid var(--s2);border-radius:10px;font-family:var(--f);font-size:.8rem;font-weight:500;text-align:center;cursor:pointer;background:transparent;color:var(--t2);-webkit-tap-highlight-color:transparent;transition:all .15s}
+.card-chev svg{width:18px;height:18px}
+.card-exp{display:none;padding-top:14px;margin-top:12px;border-top:.5px solid var(--sep)}
+.card.open .card-exp{display:block}
+.prog{display:flex;align-items:center;margin-bottom:16px;padding:0 2px}
+.pd{width:10px;height:10px;border-radius:50%;background:var(--cd2);flex-shrink:0}
+.pd.dn{background:var(--g)}.pd.nw{background:var(--ac);box-shadow:0 0 0 3px var(--ac2)}
+.pl{flex:1;height:2px;background:var(--cd2)}.pl.dn{background:var(--g)}
+.te{display:flex;gap:10px;padding-bottom:12px}.te:last-of-type{padding-bottom:0}
+.tb{display:flex;flex-direction:column;align-items:center;width:14px;flex-shrink:0}
+.td2{width:7px;height:7px;border-radius:50%;background:var(--t3);flex-shrink:0;margin-top:5px}
+.te:first-of-type .td2{background:var(--ac);box-shadow:0 0 0 2px var(--ac2)}
+.tw2{width:1px;flex:1;background:var(--sep);margin-top:4px}.te:last-of-type .tw2{display:none}
+.tt2{font-size:.8rem;font-weight:500}.ts2{font-size:.7rem;color:var(--t2);margin-top:2px}
+.tn{font-size:.76rem;color:var(--t3);padding:4px 0}
+.ebs{display:flex;gap:8px;margin-top:16px}
+.eb{flex:1;padding:10px 8px;border-radius:10px;border:none;font-family:var(--f);font-size:.76rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;-webkit-tap-highlight-color:transparent;text-decoration:none}
+.eb:active{opacity:.6}.eb svg{width:15px;height:15px}
+.eb1{background:var(--ac2);color:var(--ac)}.eb2{background:var(--b2);color:var(--b)}.eb3{background:var(--cd2);color:var(--t2)}.eb4{background:var(--r2);color:var(--r)}
+.ld svg{animation:sp .7s linear infinite}
+.bar{position:fixed;bottom:0;left:0;right:0;padding:10px 24px calc(10px + var(--sab));display:flex;align-items:center;justify-content:space-between;max-width:500px;margin:0 auto;z-index:50}
+.bb{width:50px;height:50px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bb:active{transform:scale(.88)}
+.bb1{background:var(--cd);color:var(--t2)}.bb1.on{color:var(--ac)}.bb1 svg{width:24px;height:24px}
+.bb2{background:var(--ac);color:#fff;box-shadow:0 4px 20px rgba(240,136,62,.4)}.bb2 svg{width:26px;height:26px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.ov.on{opacity:1;pointer-events:all}
+.pn{background:var(--cd);width:100%;max-width:500px;border-radius:14px 14px 0 0;padding:8px 24px calc(24px + var(--sab));transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:90dvh;overflow-y:auto}
+.ov.on .pn{transform:translateY(0)}
+.hd{width:36px;height:5px;border-radius:5px;background:var(--cd3);margin:4px auto 22px}
+.pn h2{font-size:1.2rem;font-weight:700;margin-bottom:24px;letter-spacing:-.02em}
+.ff{margin-bottom:20px}
+.ff label{display:block;font-size:.7rem;font-weight:600;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
+.ff input,.ff textarea{width:100%;padding:14px 16px;border:none;border-radius:12px;font-family:var(--f);font-size:.9rem;color:var(--t);background:var(--cd2);outline:none;-webkit-appearance:none}
+.ff input::placeholder,.ff textarea::placeholder{color:var(--t3)}
+.ff textarea{resize:none;min-height:64px}
+.fh{font-size:.68rem;color:var(--t3);margin-top:5px}
+.fs{display:none;align-items:center;gap:8px;margin-top:10px;padding:12px 16px;border-radius:12px;font-size:.82rem;font-weight:500}
+.fs.w{display:flex;background:var(--cd2);color:var(--t2)}.fs.ok{display:flex;background:var(--g2);color:var(--g)}.fs.er{display:flex;background:var(--r2);color:var(--r)}
+.spin{width:16px;height:16px;border:2px solid var(--t3);border-top-color:var(--t2);border-radius:50%;animation:sp .6s linear infinite;flex-shrink:0}
+.fs svg{width:16px;height:16px;flex-shrink:0}
+.as{display:none;margin-top:16px}.as.on{display:block}
+.asc{background:var(--cd2);border-radius:12px;overflow:hidden}
+.asr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.asr+.asr{border-top:.5px solid var(--sep)}
+.asl{font-size:.78rem;color:var(--t2)}.asv{font-size:.78rem;font-weight:600}
+.asb{padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:700;text-transform:uppercase}
+.asb.commande{background:var(--b2);color:var(--b)}.asb.expedie{background:var(--y2);color:var(--y)}.asb.transit{background:var(--ac2);color:var(--ac)}.asb.livre{background:var(--g2);color:var(--g)}
+.mn{margin-top:16px}.mn.off{display:none}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.so{padding:12px;border:1.5px solid var(--cd3);border-radius:12px;font-family:var(--f);font-size:.82rem;font-weight:500;text-align:center;cursor:pointer;background:transparent;color:var(--t2);-webkit-tap-highlight-color:transparent}
 .so.sel{border-color:var(--ac);background:var(--ac2);color:var(--ac);font-weight:600}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sbt{display:flex;gap:8px;margin-top:20px}
-.bt{flex:1;padding:14px;border-radius:12px;border:none;font-family:var(--f);font-size:.88rem;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
-.bt:active{transform:scale(.98)}
-.bm{background:var(--ac);color:#fff}
-.bg2{background:var(--s2);color:var(--t2)}
-.br{background:var(--r);color:#fff}
-
-.co{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px}
-.co.op{opacity:1;pointer-events:all}
-.cx{background:var(--s);border-radius:16px;padding:24px;max-width:300px;width:100%;text-align:center;transform:scale(.9);transition:transform .2s}
-.co.op .cx{transform:scale(1)}
-.cx h3{font-size:1rem;font-weight:700;margin-bottom:6px}
-.cx p{font-size:.82rem;color:var(--t2);margin-bottom:18px}
-
-.ts{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none}
-.to{background:var(--s);color:var(--t);padding:10px 20px;border-radius:50px;font-size:.8rem;font-weight:500;border:1px solid var(--sep);animation:ti .3s ease,too .3s ease 2.5s forwards;pointer-events:auto}
-
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bts{display:flex;gap:10px;margin-top:28px}
+.bt{flex:1;padding:16px;border-radius:14px;border:none;font-family:var(--f);font-size:.9rem;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bt:active{transform:scale(.97)}.ba{background:var(--ac);color:#fff}.bg{background:var(--cd2);color:var(--t2)}.br{background:var(--r);color:#fff}
+.co{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;padding:24px}
+.co.on{opacity:1;pointer-events:all}
+.cx{background:var(--cd);border-radius:16px;padding:28px 24px 22px;max-width:300px;width:100%;text-align:center;transform:scale(.88);transition:transform .25s cubic-bezier(.32,.72,0,1)}
+.co.on .cx{transform:scale(1)}
+.cx h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}.cx p{font-size:.84rem;color:var(--t2);margin-bottom:20px;line-height:1.4}
+.tw{position:fixed;top:calc(12px + var(--sat));left:50%;transform:translateX(-50%);z-index:600;pointer-events:none}
+.to{background:var(--cd);color:var(--t);padding:12px 22px;border-radius:50px;font-size:.82rem;font-weight:500;border:.5px solid var(--sep);animation:ti .3s ease,too .3s ease 2.5s forwards;pointer-events:auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes sp{to{transform:rotate(360deg)}}
-@keyframes ti{from{opacity:0;transform:translateY(-10px)}to{opacity:1}}
-@keyframes too{to{opacity:0}}
-.ld svg{animation:sp .8s linear infinite}
-
-@media(prefers-color-scheme:light){
-:root{--bg:#F2F2F7;--s:#FFF;--s2:#E5E5EA;--s3:#D1D1D6;--t:#000;--t2:rgba(0,0,0,.5);--t3:rgba(0,0,0,.25);--sep:rgba(0,0,0,.06);--ac:#F0883E;--ac2:rgba(240,136,62,.1);--g:#34C759;--g2:rgba(52,199,89,.1);--b:#007AFF;--b2:rgba(0,122,255,.1);--y:#FF9F0A;--y2:rgba(255,159,10,.1);--r:#FF3B30}
-.b-add{box-shadow:0 4px 16px rgba(240,136,62,.25)}
-}
+@keyframes ti{from{opacity:0;transform:translateY(-12px)}to{opacity:1}}
+@keyframes too{to{opacity:0;transform:translateY(-6px)}}
+@media(prefers-color-scheme:light){:root{--bg:#F2F2F7;--cd:#FFF;--cd2:#E5E5EA;--cd3:#D1D1D6;--t:#000;--t2:rgba(0,0,0,.5);--t3:rgba(0,0,0,.22);--sep:rgba(60,60,67,.12)}.bb2{box-shadow:0 4px 16px rgba(240,136,62,.25)}.to{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.06)}}
 </style>
 </head>
 <body>
-<div class="ts" id="ts"></div>
+<div class="tw" id="tw"></div>
 <div class="app">
-  <header>
-    <button class="gear" id="setBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
-    <h1>Colis</h1>
-  </header>
-  <div id="ls"></div>
+<header><button class="gear" id="gB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button><h1>Colis</h1></header>
+<div id="R"></div>
 </div>
-
-<div class="bottom">
-  <button class="b-btn b-notif" id="notBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
-  <button class="b-btn b-add" id="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-</div>
-
-<!-- Add/Edit -->
-<div class="ov" id="md"><div class="sh"><div class="sh-bar"></div><h2 id="mt">Nouveau colis</h2>
-<div class="fd"><label>Nom</label><input id="iN" placeholder="iPhone 16, Nike Air Max…"></div>
-<div class="fd"><label>Numéro de suivi</label><input id="iT" placeholder="Colle ton numéro ici">
-  <div class="fd-hint" id="trackHint">Entre un numéro pour détecter automatiquement le transporteur et le statut</div>
-  <div class="sync-status" id="syncSt"><div class="spinner"></div><span id="syncMsg">Recherche en cours…</span></div>
-</div>
-
-<!-- Auto-detected info -->
-<div class="auto-fields" id="autoFields">
-  <h4>Détecté automatiquement</h4>
-  <div class="af-row"><span class="af-label">Transporteur</span><span class="af-value" id="afCarrier">—</span></div>
-  <div class="af-row"><span class="af-label">Statut</span><span class="af-value" id="afStatus">—</span></div>
-  <div class="af-row" id="afEtaRow" style="display:none"><span class="af-label">Livraison estimée</span><span class="af-value" id="afEta">—</span></div>
-  <div class="af-row"><span class="af-label">Étapes trouvées</span><span class="af-value" id="afEvents">0</span></div>
-</div>
-
-<!-- Manual fields (shown when no tracking or editing) -->
-<div class="manual-fields" id="manualFields">
-  <div class="fd"><label>Transporteur</label><input id="iC" placeholder="Saisir manuellement"></div>
-  <div class="fd"><label>Statut</label><div class="sg" id="sg"><div class="so sel" data-s="commande">Commandé</div><div class="so" data-s="expedie">Expédié</div><div class="so" data-s="transit">En transit</div><div class="so" data-s="livre">Livré</div></div></div>
-  <div class="r2"><div class="fd"><label>Livraison estimée</label><input type="date" id="iE"></div><div class="fd"><label>Commandé le</label><input type="date" id="iO"></div></div>
-</div>
-
-<div class="fd"><label>Note</label><textarea id="iNo" placeholder="Optionnel" rows="2"></textarea></div>
-<div class="sbt"><button class="bt bg2" id="mc">Annuler</button><button class="bt bm" id="ms">Ajouter</button></div>
-</div></div>
-
-<!-- Event -->
-<div class="ov" id="em"><div class="sh"><div class="sh-bar"></div><h2>Ajouter une étape</h2>
-<div class="fd"><label>Description</label><input id="eD" placeholder="Centre de tri Lyon…"></div>
-<div class="r2"><div class="fd"><label>Date</label><input type="date" id="eDt"></div><div class="fd"><label>Heure</label><input type="time" id="eTm"></div></div>
-<div class="fd"><label>Lieu</label><input id="eL" placeholder="Optionnel"></div>
-<div class="sbt"><button class="bt bg2" id="ec">Annuler</button><button class="bt bm" id="es">Ajouter</button></div>
-</div></div>
-
-<!-- Settings -->
-<div class="ov" id="sm"><div class="sh"><div class="sh-bar"></div><h2>Réglages</h2>
-<div class="fd"><label>URL Cloudflare Worker</label><input id="sU" placeholder="https://xxx.workers.dev"><div class="fd-hint">Relie ton Worker Ship24 pour le suivi automatique</div></div>
-<div class="sbt"><button class="bt bg2" id="sc">Annuler</button><button class="bt bm" id="ss">Enregistrer</button></div>
-</div></div>
-
-<!-- Confirm -->
-<div class="co" id="cf"><div class="cx"><h3>Supprimer ?</h3><p>Ce colis sera supprimé.</p><div style="display:flex;gap:8px"><button class="bt bg2" id="cn">Annuler</button><button class="bt br" id="cy">Supprimer</button></div></div></div>
-
+<div class="bar"><button class="bb bb1" id="nB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button><button class="bb bb2" id="aB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+<div class="ov" id="fO"><div class="pn"><div class="hd"></div><h2 id="fT">Nouveau colis</h2>
+<div class="ff"><label>Nom</label><input id="fN" placeholder="iPhone 16, Nike Air Max..."></div>
+<div class="ff"><label>Numero de suivi</label><input id="fK" placeholder="Colle ton numero ici"><div class="fh" id="fH">Le transporteur, statut et dates seront detectes automatiquement</div><div class="fs" id="fS"><div class="spin"></div><span id="fST">Recherche...</span></div></div>
+<div class="as" id="aS"><div class="asc"><div class="asr"><span class="asl">Transporteur</span><span class="asv" id="aC">-</span></div><div class="asr"><span class="asl">Statut</span><span class="asv" id="aSt">-</span></div><div class="asr" id="aER" style="display:none"><span class="asl">Livraison estimee</span><span class="asv" id="aE">-</span></div><div class="asr"><span class="asl">Etapes</span><span class="asv" id="aEv">0</span></div></div></div>
+<div class="mn" id="mF"><div class="ff"><label>Transporteur</label><input id="fC" placeholder="Saisir manuellement"></div><div class="ff"><label>Statut</label><div class="sg" id="fG"><div class="so sel" data-s="commande">Commande</div><div class="so" data-s="expedie">Expedie</div><div class="so" data-s="transit">En transit</div><div class="so" data-s="livre">Livre</div></div></div><div class="r2"><div class="ff"><label>Livraison estimee</label><input type="date" id="fE"></div><div class="ff"><label>Commande le</label><input type="date" id="fD"></div></div></div>
+<div class="ff"><label>Note</label><textarea id="fNo" placeholder="Optionnel" rows="2"></textarea></div>
+<div class="bts"><button class="bt bg" id="fX">Annuler</button><button class="bt ba" id="fV">Ajouter</button></div></div></div>
+<div class="ov" id="eO"><div class="pn"><div class="hd"></div><h2>Ajouter une etape</h2><div class="ff"><label>Description</label><input id="eD" placeholder="Centre de tri Lyon..."></div><div class="r2"><div class="ff"><label>Date</label><input type="date" id="eDt"></div><div class="ff"><label>Heure</label><input type="time" id="eTm"></div></div><div class="ff"><label>Lieu</label><input id="eL" placeholder="Optionnel"></div><div class="bts"><button class="bt bg" id="eX">Annuler</button><button class="bt ba" id="eV">Ajouter</button></div></div></div>
+<div class="ov" id="sO"><div class="pn"><div class="hd"></div><h2>Reglages</h2><div class="ff"><label>URL Cloudflare Worker</label><input id="sU" placeholder="https://xxx.workers.dev"><div class="fh">Connecte ton Worker Ship24 pour le suivi automatique</div></div><div class="bts"><button class="bt bg" id="sX">Annuler</button><button class="bt ba" id="sV">Enregistrer</button></div></div></div>
+<div class="co" id="cO"><div class="cx"><h3>Supprimer ?</h3><p>Ce colis sera supprime.</p><div class="bts"><button class="bt bg" id="cN">Annuler</button><button class="bt br" id="cY">Supprimer</button></div></div></div>
 <script>
-const SK='colis-app-data',NK='colis-notif',WK='colis-worker',STS=['commande','expedie','transit','livre'],SL={commande:'Commandé',expedie:'Expédié',transit:'En transit',livre:'Livré'};
-let D=JSON.parse(localStorage.getItem(SK)||'[]'),nf=localStorage.getItem(NK)==='1',wk=localStorage.getItem(WK)||'',eId=null,dId=null,evT=null;
-
-// Pending auto-sync data from the form
-let pendingSync = null;
-
-// ── Carrier logos (initials with colors) ──
-const CARRIER_STYLE = {
-  'colissimo':{bg:'#FFD200',color:'#003DA5',label:'LP'},
-  'la poste':{bg:'#FFD200',color:'#003DA5',label:'LP'},
-  'chronopost':{bg:'#003DA5',color:'#FFF',label:'CH'},
-  'ups':{bg:'#351C15',color:'#FFB500',label:'UPS'},
-  'fedex':{bg:'#4D148C',color:'#FF6600',label:'FdX'},
-  'dhl':{bg:'#FFCC00',color:'#D40511',label:'DHL'},
-  'mondial relay':{bg:'#8B1A32',color:'#FFF',label:'MR'},
-  'gls':{bg:'#003DA5',color:'#FFD200',label:'GLS'},
-  'dpd':{bg:'#DC0032',color:'#FFF',label:'DPD'},
-  'amazon':{bg:'#232F3E',color:'#FF9900',label:'AMZ'},
-  'cainiao':{bg:'#FF6A00',color:'#FFF',label:'CN'},
-  'aliexpress':{bg:'#FF4747',color:'#FFF',label:'ALI'},
-  'tnt':{bg:'#FF6600',color:'#FFF',label:'TNT'},
-  'hermes':{bg:'#009FE3',color:'#FFF',label:'HRM'},
-  'royal mail':{bg:'#D4003C',color:'#FFF',label:'RM'},
-  'usps':{bg:'#333366',color:'#FFF',label:'USPS'},
-};
-function carrierLogo(name, status) {
-  if (!name) return '<div class="card-logo '+status+'">'+SL[status].charAt(0)+'</div>';
-  const key = name.toLowerCase();
-  for (const [k,v] of Object.entries(CARRIER_STYLE)) {
-    if (key.includes(k)) return '<div class="card-logo" style="background:'+v.bg+';color:'+v.color+'">'+v.label+'</div>';
-  }
-  // Fallback: first 2-3 letters
-  const short = name.replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
-  return '<div class="card-logo '+status+'">'+short+'</div>';
-}
-
-const CS=[{n:'Colissimo',p:[/^[0-9]{11}[A-Z]{2}$/i,/^[0-9]{13}$/],u:t=>'https://www.laposte.fr/outils/suivre-vos-envois?code='+t},{n:'La Poste',p:[/^[A-Z]{2}[0-9]{9}[A-Z]{2}$/i,/^[0-9]{15}$/],u:t=>'https://www.laposte.fr/outils/suivre-vos-envois?code='+t},{n:'Chronopost',p:[/^X[A-Z][0-9]{10}/i],u:t=>'https://www.chronopost.fr/tracking-no-powerful/tracking-unified/?langue=fr&numLT='+t},{n:'UPS',p:[/^1Z[A-Z0-9]{16}$/i],u:t=>'https://www.ups.com/track?tracknum='+t+'&loc=fr_FR'},{n:'FedEx',p:[/^[0-9]{12}$/,/^[0-9]{15}$/,/^[0-9]{22}$/],u:t=>'https://www.fedex.com/fedextrack/?trknbr='+t},{n:'DHL',p:[/^[0-9]{10}$/,/^JJD[0-9]{18}/i],u:t=>'https://www.dhl.com/fr-fr/home/suivi.html?tracking-id='+t},{n:'Mondial Relay',p:[/^[0-9]{8}$/,/^[0-9]{12}$/],u:t=>'https://www.mondialrelay.fr/suivi-de-colis?numExp='+t},{n:'DPD',p:[/^[0-9]{14}$/],u:t=>'https://trace.dpd.fr/fr/trace/'+t},{n:'Amazon',p:[/^TB[A-Z0-9]{10,}/i],u:t=>'https://track.amazon.fr/tracking/'+t},{n:'Cainiao',p:[/^LP[0-9]{14,}/i,/^R[A-Z][0-9]{9}[A-Z]{2}$/i],u:t=>'https://global.cainiao.com/detail.htm?mailNoList='+t}];
-function det2(t){if(!t||t.length<6)return null;t=t.trim().replace(/\s/g,'');for(const c of CS)for(const p of c.p)if(p.test(t))return c;return null}
-function tUrl(d){if(!d.tracking)return null;const c=det2(d.tracking);return c?c.u(d.tracking.trim()):'https://www.google.com/search?q=suivi+colis+'+encodeURIComponent(d.tracking)}
-function mSt(s){if(!s)return null;s=s.toLowerCase();if(s.includes('delivered')||s.includes('pickup'))return'livre';if(s.includes('transit')||s.includes('customs')||s.includes('out_for'))return'transit';if(s.includes('shipped')||s.includes('label')||s.includes('info'))return'expedie';return'transit'}
-
-// ── Auto-sync from form ──
-async function autoSync(trackingNumber) {
-  if (!wk || !trackingNumber) return null;
-  const ss = _('syncSt');
-  ss.className = 'sync-status loading';
-  _('syncMsg').textContent = 'Recherche en cours…';
-  try {
-    const r = await fetch(wk, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber})});
-    const j = await r.json();
-    if (j.data && j.data.trackings && j.data.trackings[0]) {
-      const tk = j.data.trackings[0];
-      const result = {carrier:null, status:null, eta:null, events:[]};
-      if (tk.shipment) {
-        if (tk.shipment.statusCode) result.status = mSt(tk.shipment.statusCode);
-        if (tk.shipment.delivery && tk.shipment.delivery.estimatedDeliveryDate) result.eta = tk.shipment.delivery.estimatedDeliveryDate.split('T')[0];
-      }
-      if (tk.events && tk.events.length) {
-        result.events = tk.events.map(ev => {
-          const dt = ev.datetime ? new Date(ev.datetime) : new Date();
-          return {id:gid(),desc:ev.status||'Mise à jour',date:dt.toISOString().split('T')[0],time:dt.toTimeString().slice(0,5),location:ev.location||''};
-        });
-        if (tk.events[0].courierCode) result.carrier = tk.events[0].courierCode;
-      }
-      if (!result.carrier && tk.shipment && tk.shipment.originCourierCode) result.carrier = tk.shipment.originCourierCode;
-      // Also try local detection
-      if (!result.carrier) {const c = det2(trackingNumber); if(c) result.carrier = c.n;}
-
-      // Show auto-detected info
-      ss.className = 'sync-status success';
-      ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Informations trouvées !</span>';
-      
-      const af = _('autoFields');
-      af.classList.add('show');
-      _('afCarrier').textContent = result.carrier || 'Inconnu';
-      const afSt = _('afStatus');
-      afSt.textContent = SL[result.status] || 'Inconnu';
-      afSt.className = 'af-value status ' + (result.status || '');
-      if (result.eta) {_('afEtaRow').style.display = 'flex'; _('afEta').textContent = new Date(result.eta).toLocaleDateString('fr-FR',{day:'numeric',month:'long'});}
-      else _('afEtaRow').style.display = 'none';
-      _('afEvents').textContent = result.events.length;
-
-      // Hide manual fields
-      _('manualFields').classList.add('hide');
-      _('trackHint').style.display = 'none';
-
-      pendingSync = result;
-      return result;
-    } else {
-      ss.className = 'sync-status error';
-      ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Aucune info trouvée — remplis manuellement</span>';
-      _('manualFields').classList.remove('hide');
-      pendingSync = null;
-      return null;
-    }
-  } catch(e) {
-    ss.className = 'sync-status error';
-    ss.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Erreur — remplis manuellement</span>';
-    _('manualFields').classList.remove('hide');
-    pendingSync = null;
-    return null;
-  }
-}
-
-// Sync existing card
-async function sync(id){const d=D.find(x=>x.id===id);if(!d||!d.tracking||!wk){toast(wk?'Pas de suivi':'Configure l\'API');return}const b=document.querySelector('[data-id="'+id+'"] .d-sync');if(b)b.classList.add('ld');try{const r=await fetch(wk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber:d.tracking})});const j=await r.json();if(j.data&&j.data.trackings&&j.data.trackings[0]){const tk=j.data.trackings[0];if(tk.shipment&&tk.shipment.statusCode){const ns=mSt(tk.shipment.statusCode);if(ns){if(d.status!=='livre'&&ns==='livre'){sN('Livré !',d.name);toast(d.name+' livré !')}d.status=ns}}if(tk.shipment&&tk.shipment.delivery&&tk.shipment.delivery.estimatedDeliveryDate)d.eta=tk.shipment.delivery.estimatedDeliveryDate.split('T')[0];if(tk.events&&tk.events.length){if(!d.events)d.events=[];const ks=new Set(d.events.map(e=>e.desc+e.date));let n=0;tk.events.forEach(ev=>{const dt=ev.datetime?new Date(ev.datetime):new Date();const ds=ev.status||'Mise à jour';const da=dt.toISOString().split('T')[0];if(!ks.has(ds+da)){d.events.push({id:gid(),desc:ds,date:da,time:dt.toTimeString().slice(0,5),location:ev.location||''});ks.add(ds+da);n++}});if(n)toast(n+' étape'+(n>1?'s':'')+' ajoutée'+(n>1?'s':''))}if(!d.source&&tk.events&&tk.events[0]&&tk.events[0].courierCode)d.source=tk.events[0].courierCode;d.updatedAt=Date.now();sv();render()}else toast('Aucune info trouvée')}catch(e){toast('Erreur : '+e.message)}finally{if(b)b.classList.remove('ld')}}
-
-async function aN(){if(!('Notification'in window))return false;if(Notification.permission==='granted')return true;return(await Notification.requestPermission())==='granted'}
+var SK='colis-data',NK='colis-nf',WK='colis-wk',STS=['commande','expedie','transit','livre'],SL={commande:'Commande',expedie:'Expedie',transit:'En transit',livre:'Livre'};
+var D=JSON.parse(localStorage.getItem(SK)||'[]'),nf=localStorage.getItem(NK)==='1',wk=localStorage.getItem(WK)||'',eI=null,dI=null,evI=null,pend=null;
+var CLR={'colissimo':{b:'#003DA5',f:'#FFD200',l:'LP'},'la poste':{b:'#003DA5',f:'#FFD200',l:'LP'},'chronopost':{b:'#002D72',f:'#FFF',l:'CHRN'},'ups':{b:'#351C15',f:'#FFB500',l:'UPS'},'fedex':{b:'#4D148C',f:'#FF6600',l:'FedEx'},'dhl':{b:'#FFCC00',f:'#D40511',l:'DHL'},'mondial relay':{b:'#8B1A32',f:'#FFF',l:'MR'},'gls':{b:'#003DA5',f:'#FFD200',l:'GLS'},'dpd':{b:'#DC0032',f:'#FFF',l:'DPD'},'amazon':{b:'#232F3E',f:'#FF9900',l:'amz'},'cainiao':{b:'#FF6A00',f:'#FFF',l:'CN'},'tnt':{b:'#FF6600',f:'#FFF',l:'TNT'}};
+function lg(s,st){if(s){var k=s.toLowerCase();for(var n in CLR)if(k.indexOf(n)>=0){var v=CLR[n];return'<div class="clogo" style="background:'+v.b+';color:'+v.f+'">'+v.l+'</div>'}return'<div class="clogo" style="background:var(--cd2);color:var(--t2)">'+s.slice(0,3).toUpperCase()+'</div>'}var ic={commande:'var(--b2);color:var(--b)',expedie:'var(--y2);color:var(--y)',transit:'var(--ac2);color:var(--ac)',livre:'var(--g2);color:var(--g)'};var em={commande:'\u23F3',expedie:'\uD83D\uDCE4',transit:'\uD83D\uDE9A',livre:'\u2713'};return'<div class="clogo" style="background:'+(ic[st]||'var(--cd2);color:var(--t2)')+'">'+((em[st])||'?')+'</div>'}
+var PT=[{n:'Colissimo',p:[/^[0-9]{11}[A-Z]{2}$/i,/^[0-9]{13}$/],u:function(t){return'https://www.laposte.fr/outils/suivre-vos-envois?code='+t}},{n:'La Poste',p:[/^[A-Z]{2}[0-9]{9}[A-Z]{2}$/i,/^[0-9]{15}$/],u:function(t){return'https://www.laposte.fr/outils/suivre-vos-envois?code='+t}},{n:'Chronopost',p:[/^X[A-Z][0-9]{10}/i],u:function(t){return'https://www.chronopost.fr/tracking-no-powerful/tracking-unified/?langue=fr&numLT='+t}},{n:'UPS',p:[/^1Z[A-Z0-9]{16}$/i],u:function(t){return'https://www.ups.com/track?tracknum='+t+'&loc=fr_FR'}},{n:'FedEx',p:[/^[0-9]{12}$/,/^[0-9]{15}$/,/^[0-9]{22}$/],u:function(t){return'https://www.fedex.com/fedextrack/?trknbr='+t}},{n:'DHL',p:[/^[0-9]{10}$/,/^JJD[0-9]{18}/i],u:function(t){return'https://www.dhl.com/fr-fr/home/suivi.html?tracking-id='+t}},{n:'Mondial Relay',p:[/^[0-9]{8}$/,/^[0-9]{12}$/],u:function(t){return'https://www.mondialrelay.fr/suivi-de-colis?numExp='+t}},{n:'DPD',p:[/^[0-9]{14}$/],u:function(t){return'https://trace.dpd.fr/fr/trace/'+t}},{n:'Amazon',p:[/^TB[A-Z0-9]{10,}/i],u:function(t){return'https://track.amazon.fr/tracking/'+t}},{n:'Cainiao',p:[/^LP[0-9]{14,}/i,/^R[A-Z][0-9]{9}[A-Z]{2}$/i],u:function(t){return'https://global.cainiao.com/detail.htm?mailNoList='+t}}];
+function ld(t){if(!t||t.length<6)return null;t=t.trim().replace(/\s/g,'');for(var i=0;i<PT.length;i++)for(var j=0;j<PT[i].p.length;j++)if(PT[i].p[j].test(t))return PT[i];return null}
+function tU(d){if(!d.tracking)return null;var c=ld(d.tracking);return c?c.u(d.tracking.trim()):'https://google.com/search?q=suivi+colis+'+encodeURIComponent(d.tracking)}
+function mS(s){if(!s)return null;s=s.toLowerCase();if(s.indexOf('delivered')>=0||s.indexOf('pickup')>=0)return'livre';if(s.indexOf('transit')>=0||s.indexOf('customs')>=0||s.indexOf('out_for')>=0)return'transit';if(s.indexOf('shipped')>=0||s.indexOf('label')>=0||s.indexOf('info')>=0)return'expedie';return'transit'}
+function api(num){return fetch(wk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'track',trackingNumber:num})}).then(function(r){return r.json()}).then(function(j){if(!j.data||!j.data.trackings||!j.data.trackings[0])return null;var tk=j.data.trackings[0],res={carrier:null,status:null,eta:null,events:[]};if(tk.shipment){if(tk.shipment.statusCode)res.status=mS(tk.shipment.statusCode);if(tk.shipment.delivery&&tk.shipment.delivery.estimatedDeliveryDate)res.eta=tk.shipment.delivery.estimatedDeliveryDate.split('T')[0]}if(tk.events&&tk.events.length){res.events=tk.events.map(function(e){var d=e.datetime?new Date(e.datetime):new Date();return{id:uid(),desc:e.status||'Mise a jour',date:d.toISOString().split('T')[0],time:d.toTimeString().slice(0,5),location:e.location||''}});if(tk.events[0].courierCode)res.carrier=tk.events[0].courierCode}if(!res.carrier&&tk.shipment&&tk.shipment.originCourierCode)res.carrier=tk.shipment.originCourierCode;if(!res.carrier){var c=ld(num);if(c)res.carrier=c.n}return res})}
+function syncC(id){var d=D.find(function(x){return x.id===id});if(!d||!d.tracking||!wk){toast(wk?'Pas de numero':'Configure l\'API');return}var b=document.querySelector('[data-id="'+id+'"] .eb1');if(b)b.classList.add('ld');api(d.tracking).then(function(r){if(!r){toast('Aucune info');return}if(r.status){if(d.status!=='livre'&&r.status==='livre'){sN('Livre !',d.name);toast(d.name+' livre !')}d.status=r.status}if(r.eta)d.eta=r.eta;if(r.carrier&&!d.source)d.source=r.carrier;if(r.events.length){if(!d.events)d.events=[];var ks={};d.events.forEach(function(e){ks[e.desc+e.date]=1});var n=0;r.events.forEach(function(e){if(!ks[e.desc+e.date]){d.events.push(e);ks[e.desc+e.date]=1;n++}});if(n)toast(n+' etape'+(n>1?'s':'')+' ajoutee'+(n>1?'s':''))}d.updatedAt=Date.now();sv();render()}).catch(function(e){toast('Erreur: '+e.message)}).finally(function(){if(b)b.classList.remove('ld')})}
+function askN(){if(!('Notification'in window))return Promise.resolve(false);if(Notification.permission==='granted')return Promise.resolve(true);return Notification.requestPermission().then(function(p){return p==='granted'})}
 function sN(t,b){if(!nf||Notification.permission!=='granted')return;try{new Notification(t,{body:b})}catch(e){}}
-function cE(){if(!nf)return;const td=new Date;td.setHours(0,0,0,0);D.forEach(d=>{if(d.status==='livre'||!d.eta)return;const e=new Date(d.eta);e.setHours(0,0,0,0);const df=Math.ceil((e-td)/864e5);const k='n-'+d.id+'-'+df;if(localStorage.getItem(k))return;if(df===0){sN('Aujourd\'hui !',d.name);localStorage.setItem(k,'1')}else if(df===1){sN('Demain',d.name);localStorage.setItem(k,'1')}})}
+function chkN(){if(!nf)return;var td=new Date();td.setHours(0,0,0,0);D.forEach(function(d){if(d.status==='livre'||!d.eta)return;var e=new Date(d.eta);e.setHours(0,0,0,0);var df=Math.ceil((e-td)/864e5);var k='n-'+d.id+'-'+df;if(localStorage.getItem(k))return;if(df===0){sN('Aujourd\'hui !',d.name);localStorage.setItem(k,'1')}else if(df===1){sN('Demain',d.name);localStorage.setItem(k,'1')}})}
 function sv(){localStorage.setItem(SK,JSON.stringify(D))}
-function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function fD(t){return new Date(t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
-function toast(m){const t=document.createElement('div');t.className='to';t.textContent=m;_('ts').appendChild(t);setTimeout(()=>t.remove(),3000)}
-function gS(){const e=_('sg').querySelector('.sel');return e?e.dataset.s:'commande'}
-function sS(s){_('sg').querySelectorAll('.so').forEach(e=>e.classList.toggle('sel',e.dataset.s===s))}
-const _=id=>document.getElementById(id);
-
-// ── Tracking input: auto-sync after typing ──
-let dT, lastTrack = '';
-_('iT').addEventListener('input',()=>{
-  clearTimeout(dT);
-  const val = _('iT').value.trim();
-  if (val.length < 6) {
-    _('syncSt').className = 'sync-status';
-    _('autoFields').classList.remove('show');
-    _('manualFields').classList.remove('hide');
-    _('trackHint').style.display = '';
-    pendingSync = null;
-    return;
-  }
-  dT = setTimeout(async () => {
-    if (val === lastTrack) return;
-    lastTrack = val;
-    // Try local detection first for carrier name hint
-    const c = det2(val);
-    if (c) _('iC').value = c.n;
-    // If API configured, auto-sync
-    if (wk) { await autoSync(val); }
-    else {
-      // No API — just show local detection
-      if (c) {
-        _('syncSt').className = 'sync-status success';
-        _('syncSt').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>'+c.n+' détecté</span>';
-      }
-      _('manualFields').classList.remove('hide');
-    }
-  }, 800);
-});
-
-// ── Render ──
-function render(){
-  if(!D.length){_('ls').innerHTML='<div class="empty"><p>Appuie sur "+" pour ajouter<br>une nouvelle livraison</p></div>';return}
-  _('ls').innerHTML='<div class="list">'+D.map(d=>{
-    const si=STS.indexOf(d.status),url=tUrl(d),ev=(d.events||[]).sort((a,b)=>new Date(b.date+'T'+(b.time||'00:00'))-new Date(a.date+'T'+(a.time||'00:00'))),ha=!!wk&&!!d.tracking;
-    let eta='';if(d.eta&&d.status!=='livre'){const td=new Date;td.setHours(0,0,0,0);const e=new Date(d.eta);e.setHours(0,0,0,0);const df=Math.ceil((e-td)/864e5);if(df<0)eta='En retard';else if(df===0)eta='Aujourd\'hui';else if(df===1)eta='Demain';else if(df<=7)eta='Dans '+df+' jours'}
-    const dots=STS.map((s,i)=>{const c=i<si?'done':i===si?'cur':'';const l=i<3?'<div class="dot-line'+(i<si?' done':'')+'"></div>':'';return'<div class="dot '+c+'"></div>'+l}).join('');
-    const tl=ev.length?ev.map(e=>'<div class="tl-item"><div class="tl-rail"><div class="tl-d"></div><div class="tl-w"></div></div><div><div class="tl-t">'+esc(e.desc)+'</div><div class="tl-m">'+fD(e.date)+(e.time?' · '+e.time:'')+(e.location?' · '+esc(e.location):'')+'</div></div></div>').join(''):'';
-    return'<div class="card" data-id="'+d.id+'" onclick="toggle(this)"><div class="card-row">'+carrierLogo(d.source, d.status)+'<div class="card-body"><div class="card-name">'+esc(d.name)+'</div><div class="card-sub">'+(d.source||SL[d.status])+'</div>'+(eta?'<div class="card-eta">'+eta+'</div>':'')+(d.status==='livre'?'<div class="card-eta" style="color:var(--g)">Livré</div>':'')+'</div><div class="card-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="card-detail"><div class="dots-row">'+dots+'</div>'+(tl||'<div class="tl-m">Aucune étape</div>')+'<div class="detail-actions">'+(ha?'<button class="d-btn d-sync" onclick="event.stopPropagation();sync(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync</button>':'')+(url?'<a class="d-btn d-track" href="'+url+'" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Suivre</a>':'')+'<button class="d-btn d-edit" onclick="event.stopPropagation();oEd(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="d-btn d-del" onclick="event.stopPropagation();oDl(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></div></div></div>'
-  }).join('')+'</div>';
-}
-
-function toggle(el){el.classList.toggle('open')}
-
-function resetForm(){
-  pendingSync=null;lastTrack='';
-  _('syncSt').className='sync-status';
-  _('autoFields').classList.remove('show');
-  _('manualFields').classList.remove('hide');
-  _('trackHint').style.display='';
-  _('iC').value='';
-}
-
-function oAd(){eId=null;resetForm();_('mt').textContent='Nouveau colis';_('ms').textContent='Ajouter';_('iN').value='';_('iT').value='';_('iNo').value='';_('iE').value='';_('iO').value=new Date().toISOString().split('T')[0];sS('commande');_('md').classList.add('op');setTimeout(()=>_('iN').focus(),300)}
-function oEd(id){const d=D.find(x=>x.id===id);if(!d)return;eId=id;resetForm();_('mt').textContent='Modifier';_('ms').textContent='Enregistrer';_('iN').value=d.name;_('iT').value=d.tracking||'';_('iC').value=d.source||'';_('iNo').value=d.note||'';_('iE').value=d.eta||'';_('iO').value=d.orderDate||'';sS(d.status);_('manualFields').classList.remove('hide');_('md').classList.add('op')}
-function cM(){_('md').classList.remove('op')}
-
-function svM(){
-  const nm=_('iN').value.trim();if(!nm){_('iN').focus();return}
-  const tracking = _('iT').value.trim();
-  
-  if(eId){
-    // Editing
-    const d=D.find(x=>x.id===eId);if(!d)return;
-    const os=d.status,ns=gS();
-    d.name=nm;d.tracking=tracking;d.source=_('iC').value.trim();d.note=_('iNo').value.trim();d.status=ns;d.eta=_('iE').value||null;d.orderDate=_('iO').value||null;d.updatedAt=Date.now();
-    if(os&&os!==ns){if(!d.events)d.events=[];d.events.push({id:gid(),desc:'Statut → '+SL[ns],date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''});if(ns==='livre'){sN('Livré !',nm);toast(nm+' livré !')}}
-  } else {
-    // Adding new
-    const nd = {
-      id:gid(), name:nm, tracking, note:_('iNo').value.trim(),
-      createdAt:Date.now(), updatedAt:Date.now(), events:[]
-    };
-
-    if (pendingSync) {
-      // Use auto-detected data
-      nd.source = pendingSync.carrier || _('iC').value.trim();
-      nd.status = pendingSync.status || 'commande';
-      nd.eta = pendingSync.eta || null;
-      nd.events = pendingSync.events || [];
-      if (nd.status === 'livre') toast(nm + ' est déjà livré !');
-    } else {
-      // Manual
-      nd.source = _('iC').value.trim();
-      nd.status = gS();
-      nd.eta = _('iE').value || null;
-      nd.orderDate = _('iO').value || null;
-      nd.events = [{id:gid(),desc:'Commande enregistrée',date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''}];
-    }
-    D.unshift(nd);
-  }
-  sv();render();cM();
-}
-
-function oEv(id){evT=id;_('eD').value='';_('eDt').value=new Date().toISOString().split('T')[0];_('eTm').value=new Date().toTimeString().slice(0,5);_('eL').value='';_('em').classList.add('op');setTimeout(()=>_('eD').focus(),300)}
-function cEv(){_('em').classList.remove('op')}
-function svEv(){const ds=_('eD').value.trim();if(!ds){_('eD').focus();return}const d=D.find(x=>x.id===evT);if(!d)return;if(!d.events)d.events=[];d.events.push({id:gid(),desc:ds,date:_('eDt').value,time:_('eTm').value,location:_('eL').value.trim()});d.updatedAt=Date.now();sv();render();cEv();toast('Étape ajoutée')}
-function oSet(){_('sU').value=wk;_('sm').classList.add('op')}
-function cSet(){_('sm').classList.remove('op')}
-function svSet(){wk=_('sU').value.trim();localStorage.setItem(WK,wk);render();cSet();toast(wk?'API connectée':'API déconnectée')}
-function oDl(id){dId=id;_('cf').classList.add('op')}
-function cCf(){_('cf').classList.remove('op');dId=null}
-function dDl(){if(!dId)return;D=D.filter(x=>x.id!==dId);sv();render();cCf()}
-
-_('fab').onclick=oAd;_('mc').onclick=cM;_('ms').onclick=svM;_('ec').onclick=cEv;_('es').onclick=svEv;_('setBtn').onclick=oSet;_('sc').onclick=cSet;_('ss').onclick=svSet;_('cn').onclick=cCf;_('cy').onclick=dDl;
-_('md').onclick=e=>{if(e.target===_('md'))cM()};_('em').onclick=e=>{if(e.target===_('em'))cEv()};_('sm').onclick=e=>{if(e.target===_('sm'))cSet()};_('cf').onclick=e=>{if(e.target===_('cf'))cCf()};
-_('sg').onclick=e=>{const o=e.target.closest('.so');if(o)sS(o.dataset.s)};
-_('notBtn').onclick=async()=>{if(nf){nf=false;localStorage.setItem(NK,'0');toast('Notifications off')}else{if(await aN()){nf=true;localStorage.setItem(NK,'1');toast('Notifications on')}else toast('Permission refusée')}updN()};
-function updN(){_('notBtn').classList.toggle('on',nf)}
-document.onkeydown=e=>{if(e.key==='Escape'){if(_('cf').classList.contains('op'))cCf();else if(_('sm').classList.contains('op'))cSet();else if(_('em').classList.contains('op'))cEv();else if(_('md').classList.contains('op'))cM()}};
-updN();render();cE();setInterval(cE,18e5);
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function fDt(t){return new Date(t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
+function fDL(t){return new Date(t).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})}
+function toast(m){var t=document.createElement('div');t.className='to';t.textContent=m;_('tw').appendChild(t);setTimeout(function(){t.remove()},3000)}
+function _(id){return document.getElementById(id)}
+function gSt(){var e=_('fG').querySelector('.sel');return e?e.dataset.s:'commande'}
+function sSt(s){_('fG').querySelectorAll('.so').forEach(function(e){e.classList.toggle('sel',e.dataset.s===s)})}
+var dTm,lT='';
+_('fK').addEventListener('input',function(){clearTimeout(dTm);var v=_('fK').value.trim();if(v.length<6){rA();return}dTm=setTimeout(function(){if(v===lT)return;lT=v;if(wk){_('fS').className='fs w';_('fS').innerHTML='<div class="spin"></div><span>Recherche...</span>';_('fH').style.display='none';api(v).then(function(r){if(r&&(r.status||r.events.length)){pend=r;_('fS').className='fs ok';_('fS').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Informations trouvees</span>';_('aC').textContent=r.carrier||'Inconnu';var st=_('aSt');st.textContent=SL[r.status]||'-';st.className='asv asb '+(r.status||'');if(r.eta){_('aER').style.display='flex';_('aE').textContent=fDL(r.eta)}else _('aER').style.display='none';_('aEv').textContent=r.events.length;_('aS').classList.add('on');_('mF').classList.add('off')}else{pend=null;_('fS').className='fs er';_('fS').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Rien trouve</span>';_('mF').classList.remove('off')}}).catch(function(){pend=null;_('fS').className='fs er';_('fS').innerHTML='Erreur reseau';_('mF').classList.remove('off')})}else{var c=ld(v);if(c){_('fC').value=c.n;_('fS').className='fs ok';_('fS').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>'+c.n+' detecte</span>';_('fH').style.display='none'}_('mF').classList.remove('off')}},900)});
+function rA(){pend=null;lT='';_('fS').className='fs';_('aS').classList.remove('on');_('fH').style.display='';if(!eI&&wk)_('mF').classList.add('off');else _('mF').classList.remove('off')}
+function render(){var r=_('R');if(!D.length){r.innerHTML='<div class="empty"><p>Appuie sur "+" pour ajouter<br>une nouvelle livraison</p></div>';return}r.innerHTML='<div class="list">'+D.map(function(d){var si=STS.indexOf(d.status),url=tU(d),ev=(d.events||[]).sort(function(a,b){return new Date(b.date+'T'+(b.time||'00:00'))-new Date(a.date+'T'+(a.time||'00:00'))}),ha=!!wk&&!!d.tracking;var eta='';if(d.status==='livre')eta='Livre';else if(d.eta){var td=new Date();td.setHours(0,0,0,0);var e=new Date(d.eta);e.setHours(0,0,0,0);var df=Math.ceil((e-td)/864e5);if(df<0)eta='En retard';else if(df===0)eta='Aujourd\'hui';else if(df===1)eta='Demain';else if(df<=7)eta='Dans '+df+' jours'}var prog=STS.map(function(s,i){var c=i<si?'dn':i===si?'nw':'';var l=i<3?'<div class="pl'+(i<si?' dn':'')+'"></div>':'';return'<div class="pd '+c+'"></div>'+l}).join('');var tl=ev.length?ev.map(function(e){return'<div class="te"><div class="tb"><div class="td2"></div><div class="tw2"></div></div><div><div class="tt2">'+esc(e.desc)+'</div><div class="ts2">'+fDt(e.date)+(e.time?' \u00B7 '+e.time:'')+(e.location?' \u00B7 '+esc(e.location):'')+'</div></div></div>'}).join(''):'<div class="tn">Aucune etape</div>';return'<div class="card" data-id="'+d.id+'" onclick="tog(this)"><div class="card-row">'+lg(d.source,d.status)+'<div class="card-body"><div class="card-name">'+esc(d.name)+'</div><div class="card-sub">'+(d.source||SL[d.status])+'</div>'+(eta?'<div class="card-eta'+(d.status==='livre'?' ok':'')+'">'+eta+'</div>':'')+'</div><div class="card-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="card-exp"><div class="prog">'+prog+'</div>'+tl+'<div class="ebs">'+(ha?'<button class="eb eb1" onclick="event.stopPropagation();syncC(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync</button>':'')+(url?'<a class="eb eb2" href="'+url+'" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Suivre</a>':'')+'<button class="eb eb3" onclick="event.stopPropagation();oEd(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="eb eb4" onclick="event.stopPropagation();oDl(\''+d.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></div></div></div>'}).join('')+'</div>'}
+function tog(el){el.classList.toggle('open')}
+function oAd(){eI=null;rA();_('fT').textContent='Nouveau colis';_('fV').textContent='Ajouter';_('fN').value='';_('fK').value='';_('fC').value='';_('fNo').value='';_('fE').value='';_('fD').value='';sSt('commande');if(wk)_('mF').classList.add('off');else _('mF').classList.remove('off');_('fO').classList.add('on');setTimeout(function(){_('fN').focus()},300)}
+function oEd(id){var d=D.find(function(x){return x.id===id});if(!d)return;eI=id;rA();_('fT').textContent='Modifier';_('fV').textContent='Enregistrer';_('fN').value=d.name;_('fK').value=d.tracking||'';_('fC').value=d.source||'';_('fNo').value=d.note||'';_('fE').value=d.eta||'';_('fD').value=d.orderDate||'';sSt(d.status);_('mF').classList.remove('off');_('fO').classList.add('on')}
+function cF(){_('fO').classList.remove('on')}
+function svF(){var nm=_('fN').value.trim();if(!nm){_('fN').focus();return}var trk=_('fK').value.trim();if(eI){var d=D.find(function(x){return x.id===eI});if(!d)return;var os=d.status,ns=gSt();d.name=nm;d.tracking=trk;d.source=_('fC').value.trim();d.note=_('fNo').value.trim();d.status=ns;d.eta=_('fE').value||null;d.orderDate=_('fD').value||null;d.updatedAt=Date.now();if(os!==ns){if(!d.events)d.events=[];d.events.push({id:uid(),desc:'\u2192 '+SL[ns],date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''});if(ns==='livre'){sN('Livre !',nm);toast(nm+' livre !')}}}else{var nd={id:uid(),name:nm,tracking:trk,note:_('fNo').value.trim(),createdAt:Date.now(),updatedAt:Date.now(),events:[]};if(pend){nd.source=pend.carrier||'';nd.status=pend.status||'commande';nd.eta=pend.eta||null;nd.events=pend.events||[];if(nd.status==='livre')toast(nm+' - deja livre')}else{nd.source=_('fC').value.trim();nd.status=gSt();nd.eta=_('fE').value||null;nd.orderDate=_('fD').value||null;nd.events=[{id:uid(),desc:'Commande enregistree',date:new Date().toISOString().split('T')[0],time:new Date().toTimeString().slice(0,5),location:''}]}D.unshift(nd)}sv();render();cF()}
+function oEv(id){evI=id;_('eD').value='';_('eDt').value=new Date().toISOString().split('T')[0];_('eTm').value=new Date().toTimeString().slice(0,5);_('eL').value='';_('eO').classList.add('on');setTimeout(function(){_('eD').focus()},300)}
+function cEv(){_('eO').classList.remove('on')}
+function svEv(){var ds=_('eD').value.trim();if(!ds){_('eD').focus();return}var d=D.find(function(x){return x.id===evI});if(!d)return;if(!d.events)d.events=[];d.events.push({id:uid(),desc:ds,date:_('eDt').value,time:_('eTm').value,location:_('eL').value.trim()});d.updatedAt=Date.now();sv();render();cEv();toast('Etape ajoutee')}
+function oSet(){_('sU').value=wk;_('sO').classList.add('on')}
+function cSet(){_('sO').classList.remove('on')}
+function svSet(){wk=_('sU').value.trim();localStorage.setItem(WK,wk);cSet();toast(wk?'API connectee':'API deconnectee')}
+function oDl(id){dI=id;_('cO').classList.add('on')}
+function cCf(){_('cO').classList.remove('on');dI=null}
+function dDl(){if(!dI)return;D=D.filter(function(x){return x.id!==dI});sv();render();cCf()}
+_('aB').onclick=oAd;_('fX').onclick=cF;_('fV').onclick=svF;_('eX').onclick=cEv;_('eV').onclick=svEv;_('gB').onclick=oSet;_('sX').onclick=cSet;_('sV').onclick=svSet;_('cN').onclick=cCf;_('cY').onclick=dDl;
+_('fO').onclick=function(e){if(e.target===_('fO'))cF()};_('eO').onclick=function(e){if(e.target===_('eO'))cEv()};_('sO').onclick=function(e){if(e.target===_('sO'))cSet()};_('cO').onclick=function(e){if(e.target===_('cO'))cCf()};
+_('fG').onclick=function(e){var o=e.target.closest('.so');if(o)sSt(o.dataset.s)};
+_('nB').onclick=function(){if(nf){nf=false;localStorage.setItem(NK,'0');toast('Notifications off')}else{askN().then(function(ok){if(ok){nf=true;localStorage.setItem(NK,'1');toast('Notifications on')}else toast('Permission refusee');_('nB').classList.toggle('on',nf)})}; _('nB').classList.toggle('on',nf)};
+document.onkeydown=function(e){if(e.key==='Escape'){if(_('cO').classList.contains('on'))cCf();else if(_('sO').classList.contains('on'))cSet();else if(_('eO').classList.contains('on'))cEv();else if(_('fO').classList.contains('on'))cF()}};
+_('nB').classList.toggle('on',nf);render();chkN();setInterval(chkN,18e5);
 </script>
 </body>
 </html>
